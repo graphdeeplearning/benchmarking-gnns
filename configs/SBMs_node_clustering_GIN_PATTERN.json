@@ -1,0 +1,38 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 0
+    },
+    
+    "model": "GIN",
+    "dataset": "SBM_PATTERN",
+    
+    "out_dir": "out/SBMs_node_classification/",
+    
+    "params": {
+        "seed": 41,
+        "epochs": 1000,
+        "batch_size": 128,
+        "init_lr": 0.001,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 5,
+        "min_lr": 1e-5,
+        "weight_decay": 0.0,
+        "print_epoch_interval": 5,
+        "max_time": 48
+    },
+    
+    "net_params": {
+        "L": 4,
+        "hidden_dim": 110,
+        "residual": true,
+        "readout": "sum",
+        "n_mlp_GIN": 2,
+        "learn_eps_GIN": true,
+        "neighbor_aggr_GIN": "sum",
+        "in_feat_dropout": 0.0,
+        "dropout": 0.0,
+        "graph_norm": true,
+        "batch_norm": true
+    }
+}
