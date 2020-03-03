@@ -30,8 +30,8 @@ source ~/.bash_profile    # For OSX
 ```
 # Clone GitHub repo
 conda install git
-git clone https://github.com/xxx/benchmarking-gnn.git
-cd benchmarking-gnn
+git clone https://github.com/graphdeeplearning/benchmarking-gnns.git
+cd benchmarking-gnns
 
 # Install python environment
 conda env create -f environment_cpu.yml   
@@ -65,8 +65,8 @@ cat /usr/local/cuda/version.txt # Check CUDA version is 10.0
 
 # Clone GitHub repo
 conda install git
-git clone https://github.com/xxx/benchmarking-gnn.git
-cd benchmarking-gnn
+git clone https://github.com/graphdeeplearning/benchmarking-gnns.git
+cd benchmarking-gnns
 
 # Install python environment
 conda env create -f environment_gpu.yml 
@@ -94,8 +94,8 @@ cat /usr/local/cuda/version.txt # Check CUDA version is 10.0
 
 # Clone GitHub repo
 conda install git
-git clone https://github.com/xxx/benchmarking-gnn.git
-cd benchmarking-gnn
+git clone https://github.com/graphdeeplearning/benchmarking-gnns.git
+cd benchmarking-gnns
 
 # Install python environment
 conda env create -f environment_gpu.yml 
