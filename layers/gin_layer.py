@@ -36,9 +36,10 @@ class GINLayer(nn.Module):
         If True, :math:`\epsilon` will be a learnable parameter.
     
     """
-    def __init__(self, apply_func, aggr_type, dropout, graph_norm, batch_norm, residual=False, init_eps=0, learn_eps=False):
+    def __init__(self, apply_func, aggr_type, dropout, graph_norm, batch_norm, residual=False, init_eps=0, learn_eps=False, activation=None):
         super().__init__()
         self.apply_func = apply_func
+        self.activation = activation
         
         if aggr_type == 'sum':
             self._reducer = fn.sum
@@ -79,12 +80,13 @@ class GINLayer(nn.Module):
             h = self.apply_func(h)
 
         if self.graph_norm:
-            h = h* snorm_n # normalize activation w.r.t. graph size
+            h = h * snorm_n # normalize activation w.r.t. graph size
         
         if self.batch_norm:
             h = self.bn_node_h(h) # batch normalization  
-        
-        h = F.relu(h) # non-linear activation
+       
+        if self.activation:
+            h = F.relu(h) # non-linear activation
         
         if self.residual:
             h = h_in + h # residual connection
@@ -102,6 +104,7 @@ class ApplyNodeFunc(nn.Module):
     def __init__(self, mlp):
         super().__init__()
         self.mlp = mlp
+        self.bn = nn.BatchNorm1d(self.mlp.output_dim)
 
     def forward(self, h):
         h = self.mlp(h)

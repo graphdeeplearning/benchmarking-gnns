@@ -32,6 +32,7 @@ class GATNet(nn.Module):
         self.dropout = dropout
         self.n_classes = n_classes
         self.device = net_params['device']
+        self.dgl_builtin = net_params['builtin']
 
         feat_drop = dropout
         attn_drop = dropout 
@@ -42,47 +43,26 @@ class GATNet(nn.Module):
         # input projection (no residual)
         self.layers.append(GATLayer(
             in_dim, hidden_dim, num_heads,
-            dropout, self.graph_norm, self.batch_norm, self.residual))
+            dropout, self.graph_norm, self.batch_norm, self.residual,
+            activation=self.activation, dgl_builtin=self.dgl_builtin))
         # hidden layers
         for l in range(1, n_layers):
             # due to multi-head, the in_dim = hidden_dim * num_heads
             self.layers.append(GATLayer(
                 hidden_dim * num_heads, hidden_dim, num_heads,
-                dropout, self.graph_norm, self.batch_norm, self.residual))
+                dropout, self.graph_norm, self.batch_norm, self.residual,
+                activation=self.activation, dgl_builtin=self.dgl_builtin))
         # output projection
         self.layers.append(GATLayer(
                 hidden_dim * num_heads, n_classes, 1,
-                dropout, self.graph_norm, self.batch_norm, self.residual))
-        
-        #feat_drop = dropout
-        #attn_drop = dropout 
-        #negative_slope = 0.2
-        #residual = False
-        #self.layers = nn.ModuleList()
-        #self.activation = F.elu
-        ## input projection (no residual)
-        #self.layers.append(GATConv(
-        #    in_dim, hidden_dim, num_heads,
-        #    feat_drop, attn_drop, negative_slope, False, self.activation))
-        ## hidden layers
-        #for l in range(1, n_layers):
-        #    # due to multi-head, the in_dim = hidden_dim * num_heads
-        #    self.layers.append(GATConv(
-        #        hidden_dim * num_heads, hidden_dim, num_heads,
-        #        feat_drop, attn_drop, negative_slope, residual, self.activation))
-        ## output projection
-        #self.layers.append(GATConv(
-        #    hidden_dim * num_heads, n_classes, 1,
-        #    feat_drop, attn_drop, negative_slope, residual, None))
+                dropout, self.graph_norm, self.batch_norm, self.residual,
+                activation=None, dgl_builtin=self.dgl_builtin))
 
     def forward(self, g, h, e, snorm_n, snorm_e):
 
-        # GAT built-in
         for conv in self.layers[:-1]:
-            #h = conv(g, h).flatten(1)
             h = conv(g, h, snorm_n)
 
-        #h = self.layers[-1](g, h).mean(1)
         h = self.layers[-1](g, h, snorm_n)
 
         return h
@@ -94,7 +74,3 @@ class GATNet(nn.Module):
         loss = criterion(pred, label)
 
         return loss
-
-
-
-        

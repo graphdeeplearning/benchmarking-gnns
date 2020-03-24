@@ -29,24 +29,26 @@ class GraphSageNet(nn.Module):
         aggregator_type = net_params['sage_aggregator']
         n_layers = net_params['L']
         self.residual = net_params['residual']
+        dgl_builtin = net_params['builtin']
+        bnorm = net_params['batch_norm']
         
-        #self.layers = nn.ModuleList()
-        ## Input
-        #self.layers.append(SAGEConv(in_dim, hidden_dim, aggregator_type, feat_drop=dropout, activation=F.relu))
-        ## Hidden
-        #self.layers.extend(nn.ModuleList([SAGEConv(hidden_dim, hidden_dim, aggregator_type, feat_drop=dropout, activation=F.relu) for _ in range(n_layers-1)]))
-        ## Output
-        #self.layers.append(SAGEConv(hidden_dim, n_classes, aggregator_type, 
-        #    feat_drop=dropout, activation=None))
         self.layers = nn.ModuleList()
-        self.layers.append(GraphSageLayer(in_dim, hidden_dim, F.relu, dropout, aggregator_type, self.residual))
-        self.layers.extend(nn.ModuleList([GraphSageLayer(hidden_dim, hidden_dim, F.relu,
-                                              dropout, aggregator_type, self.residual) for _ in range(n_layers-1)]))
-        self.layers.append(GraphSageLayer(hidden_dim, n_classes, None, dropout, aggregator_type, self.residual))
+        # Input
+        self.layers.append(GraphSageLayer(in_dim, hidden_dim, F.relu,
+            dropout, aggregator_type, self.residual,
+            bn=bnorm, dgl_builtin=dgl_builtin))
+        # Hidden layers
+        self.layers.extend(nn.ModuleList([GraphSageLayer(hidden_dim,
+            hidden_dim, F.relu, dropout, aggregator_type, self.residual,
+            bn=bnorm, dgl_builtin=dgl_builtin) for _ in range(n_layers-1)]))
+        # Output layer
+        self.layers.append(GraphSageLayer(hidden_dim, n_classes, None,
+            dropout, aggregator_type, self.residual, bn=bnorm,
+            dgl_builtin=dgl_builtin))
         
     def forward(self, g, h, e, snorm_n, snorm_e):
         for conv in self.layers:
-            h = conv(g, h, snorm_n.unsqueeze(-1))
+            h = conv(g, h)
         return h
 
         

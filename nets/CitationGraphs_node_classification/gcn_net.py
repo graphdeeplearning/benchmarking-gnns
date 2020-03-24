@@ -30,27 +30,32 @@ class GCNNet(nn.Module):
         self.residual = net_params['residual']
         self.n_classes = n_classes
         self.device = net_params['device']
+        self.dgl_builtin = net_params['builtin']
 
         self.layers = nn.ModuleList()
         # input
-        self.layers.append(GCNLayer(in_dim, hidden_dim, F.relu, dropout, self.graph_norm, self.batch_norm, self.residual))
+        self.layers.append(GCNLayer(in_dim, hidden_dim, F.relu, dropout,
+            self.graph_norm, self.batch_norm, self.residual,
+            reducer='sum', dgl_builtin=self.dgl_builtin))
 
         # hidden
-        self.layers.extend(nn.ModuleList([GCNLayer(hidden_dim, hidden_dim, F.relu, dropout,
-                                              self.graph_norm, self.batch_norm, self.residual) for _ in range(n_layers-1)]))
+        self.layers.extend(nn.ModuleList([GCNLayer(hidden_dim, hidden_dim,
+            F.relu, dropout, self.graph_norm, self.batch_norm, self.residual,
+            reducer='sum', dgl_builtin=self.dgl_builtin)
+            for _ in range(n_layers-1)]))
 
         # output
-        self.layers.append(GCNLayer(hidden_dim, n_classes, F.relu, dropout, self.graph_norm, self.batch_norm, self.residual))
+        self.layers.append(GCNLayer(hidden_dim, n_classes, None, 0,
+            self.graph_norm, self.batch_norm, self.residual,
+            reducer='sum', dgl_builtin=self.dgl_builtin))
 
         self.dropout = nn.Dropout(p=dropout)
 
     def forward(self, g, h, e, snorm_n, snorm_e):
-       
+      
         # GCN
         for i, conv in enumerate(self.layers):
-            if i != 0:
-                h = self.dropout(h)
-            h = conv(g, h, snorm_n.unsqueeze(-1))
+            h = conv(g, h, snorm_n)
         return h
 
     

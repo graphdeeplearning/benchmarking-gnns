@@ -22,6 +22,7 @@
     },
     
     "net_params": {
+        "builtin": true,
         "L": 1,
         "hidden_dim": 16,
         "out_dim": 16,
@@ -30,6 +31,6 @@
         "dropout": 0.5,
         "graph_norm": true,
         "batch_norm": false,
-        "self_loop": false
+        "self_loop": true
     }
 }

@@ -81,7 +81,7 @@ def view_model_param(MODEL_NAME, net_params):
     print("MODEL DETAILS:\n")
     #print(model)
     for param in model.parameters():
-        # print(param.data.size())
+        #print(param.data.size())
         total_param += np.prod(list(param.data.size()))
     print('MODEL/Total parameters:', MODEL_NAME, total_param)
     return total_param
@@ -261,6 +261,7 @@ def main():
     parser.add_argument('--gpu_id', help="Please give a value for gpu id")
     parser.add_argument('--model', help="Please give a value for model name")
     parser.add_argument('--dataset', help="Please give a value for dataset name")
+    parser.add_argument('--builtin', help="Please give a value for builtin")
     parser.add_argument('--out_dir', help="Please give a value for out_dir")
     parser.add_argument('--seed', help="Please give a value for seed")
     parser.add_argument('--epochs', help="Please give a value for epochs")
@@ -388,17 +389,22 @@ def main():
         net_params['cat'] = True if args.cat=='True' else False
     if args.self_loop is not None:
         net_params['self_loop'] = True if args.self_loop=='True' else False
+    if args.builtin is not None:
+        net_params['builtin'] = True if args.builtin == 'True' else False
         
     # CitationGraph 
     net_params['in_dim'] = dataset.num_dims # node_dim (feat is an integer)
     net_params['n_classes'] = dataset.num_classes
 
 
-
-    root_log_dir = out_dir + 'logs/' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y')
-    root_ckpt_dir = out_dir + 'checkpoints/' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y')
-    write_file_name = out_dir + 'results/result_' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y')
-    write_config_file = out_dir + 'configs/config_' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y')
+    if MODEL_NAME in ['MLP', 'MLP_GATED']:
+        builtin = ''
+    else:
+        builtin = 'DGL' if net_params['builtin'] else 'Custom'
+    root_log_dir = out_dir + 'logs/' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y') + builtin
+    root_ckpt_dir = out_dir + 'checkpoints/' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y') + builtin
+    write_file_name = out_dir + 'results/result_' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y') + builtin
+    write_config_file = out_dir + 'configs/config_' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y') + builtin
     dirs = root_log_dir, root_ckpt_dir, write_file_name, write_config_file
 
     if not os.path.exists(out_dir + 'results'):

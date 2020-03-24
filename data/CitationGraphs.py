@@ -63,7 +63,9 @@ class CitationGraphsDataset(torch.utils.data.Dataset):
         graph.batch_num_nodes = [N]
 
 
-        self.norm_n = torch.pow(graph.in_degrees().float().clamp(min=1), -0.5)
+        norm = torch.pow(graph.in_degrees().float().clamp(min=1), -0.5)
+        shp = norm.shape + (1,) * (graph.ndata['feat'].dim() - 1)
+        self.norm_n = torch.reshape(norm, shp)
         self.norm_e = torch.FloatTensor(E,1).fill_(1./float(E)).sqrt()
         self.graph = graph
         self.train_mask = torch.BoolTensor(dataset.train_mask)
@@ -85,4 +87,7 @@ class CitationGraphsDataset(torch.utils.data.Dataset):
         # function for adding self loops
         # this function will be called only if self_loop flag is True
         self.graph = self_loop(self.graph)
+        norm = torch.pow(self.graph.in_degrees().float().clamp(min=1), -0.5)
+        shp = norm.shape + (1,) * (self.graph.ndata['feat'].dim() - 1)
+        self.norm_n = torch.reshape(norm, shp)
 

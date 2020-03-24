@@ -13,12 +13,10 @@
 # GNNs
 ############
 
-#GatedGCN TODO
 #GCN
 #GraphSage
 #MLP
 #MLP_GATED
-#GIN
 #GAT
 
 code=main_CitationGraphs_node_classification.py 
@@ -26,7 +24,7 @@ tmux new -s benchmark_CitationGraphs_node_classification -d
 tmux send-keys "conda activate benchmark_gnn" C-m
 
 datasets=(CORA CITESEER PUBMED)
-nets=(GCN GraphSage MLP MLP_GATED GIN GAT)
+nets=(GCN GraphSage GAT MLP MLP_GATED)
 for dataset in ${datasets[@]}; do
     for net in ${nets[@]}; do
         tmux send-keys "
