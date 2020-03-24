@@ -10,7 +10,7 @@ import csv
 import dgl
 from dgl.data import CoraDataset
 from dgl.data import CitationGraphDataset
-
+import networkx as nx
 
 import random
 random.seed(42)
@@ -53,15 +53,17 @@ class CitationGraphsDataset(torch.utils.data.Dataset):
             dataset = CoraDataset()
         else:
             dataset = CitationGraphDataset(self.name)
+        dataset.graph.remove_edges_from(nx.selfloop_edges(dataset.graph))
         graph = dgl.DGLGraph(dataset.graph)
         E = graph.number_of_edges()
         N = graph.number_of_nodes()
         D = dataset.features.shape[1]
         graph.ndata['feat'] = torch.Tensor(dataset.features)
         graph.edata['feat'] = torch.zeros((E, D))
+        graph.batch_num_nodes = [N]
 
 
-        self.norm_n = torch.FloatTensor(N,1).fill_(1./float(N)).sqrt()
+        self.norm_n = torch.pow(graph.in_degrees().float().clamp(min=1), -0.5)
         self.norm_e = torch.FloatTensor(E,1).fill_(1./float(E)).sqrt()
         self.graph = graph
         self.train_mask = torch.BoolTensor(dataset.train_mask)

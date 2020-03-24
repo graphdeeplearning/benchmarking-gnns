@@ -4,18 +4,17 @@
         "id": 0
     },
     
-    "model": "GAT",
-    "dataset": "CitationGraph_CITESEER",
+    "model": "MLP",
     
     "out_dir": "out/CitationGraphs_node_classification/",
-    
+
     "params": {
         "seed": 41,
         "epochs": 300,
-        "batch_size": 128,
+        "batch_size": 20,
         "init_lr": 0.005,
         "lr_reduce_factor": 0.5,
-        "lr_schedule_patience": 5,
+        "lr_schedule_patience": 25,
         "min_lr": 1e-5,
         "weight_decay": 5e-4,
         "print_epoch_interval": 5,
@@ -23,15 +22,12 @@
     },
     
     "net_params": {
-        "L": 1,
-        "n_heads": 8,
-        "hidden_dim": 8,
-        "out_dim": 152,
-        "residual": false,
+        "L": 4,
+        "hidden_dim": 16,
+        "out_dim": 16,
+        "readout": "mean",
+        "gated": true,
         "in_feat_dropout": 0.6,
-        "dropout": 0.6,
-        "graph_norm": false,
-        "batch_norm": false,
-        "self_loop": true
+        "dropout": 0.6
     }
 }

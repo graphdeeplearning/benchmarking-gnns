@@ -33,6 +33,7 @@ def GIN(net_params):
 def MoNet(net_params):
     return MoNet_(net_params)
 
+
 def gnn_model(MODEL_NAME, net_params):
     models = {
         'GatedGCN': GatedGCN,
@@ -41,7 +42,7 @@ def gnn_model(MODEL_NAME, net_params):
         'GraphSage': GraphSage,
         'MLP': MLP,
         'GIN': GIN,
-        'MoNet': MoNet
+        'MoNet': MoNet,
     }
         
     return models[MODEL_NAME](net_params)

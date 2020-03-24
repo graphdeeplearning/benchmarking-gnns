@@ -135,10 +135,10 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
     model = model.to(device)
 
     optimizer = optim.Adam(model.parameters(), lr=params['init_lr'], weight_decay=params['weight_decay'])
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
-                                                     factor=params['lr_reduce_factor'],
-                                                     patience=params['lr_schedule_patience'],
-                                                     verbose=True)
+    #scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min',
+    #                                                 factor=params['lr_reduce_factor'],
+    #                                                 patience=params['lr_schedule_patience'],
+    #                                                 verbose=True)
     
     epoch_train_losses, epoch_val_losses = [], []
     epoch_train_accs, epoch_val_accs = [], [] 
@@ -195,7 +195,7 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
                     if epoch_nb < epoch-1:
                         os.remove(file)
 
-                scheduler.step(epoch_val_loss)
+                #scheduler.step(epoch_val_loss)
 
                 if optimizer.param_groups[0]['lr'] < params['min_lr']:
                     optimizer.param_groups[0]['lr'] = params['min_lr']
@@ -392,6 +392,8 @@ def main():
     # CitationGraph 
     net_params['in_dim'] = dataset.num_dims # node_dim (feat is an integer)
     net_params['n_classes'] = dataset.num_classes
+
+
 
     root_log_dir = out_dir + 'logs/' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y')
     root_ckpt_dir = out_dir + 'checkpoints/' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y')
