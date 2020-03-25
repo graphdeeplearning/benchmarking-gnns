@@ -15,12 +15,8 @@ from dgl.nn.pytorch import GraphConv
 # Equivalent to => return {'m': edges.src['h']}
 msg = fn.copy_src(src='h', out='m')
 
-def mean_reduce(nodes):
+def reduce(nodes):
     accum = torch.mean(nodes.mailbox['m'], 1)
-    return {'h': accum}
-
-def sum_reduce(nodes):
-    accum = torch.sum(nodes.mailbox['m'], 1)
     return {'h': accum}
 
 class NodeApplyModule(nn.Module):
@@ -37,7 +33,7 @@ class GCNLayer(nn.Module):
     """
         Param: [in_dim, out_dim]
     """
-    def __init__(self, in_dim, out_dim, activation, dropout, graph_norm, batch_norm, residual=False, reducer='mean', dgl_builtin=False):
+    def __init__(self, in_dim, out_dim, activation, dropout, graph_norm, batch_norm, residual=False, dgl_builtin=False):
         super().__init__()
         self.in_channels = in_dim
         self.out_channels = out_dim
@@ -57,25 +53,20 @@ class GCNLayer(nn.Module):
         else:
             self.conv = GraphConv(in_dim, out_dim)
 
-        if reducer == 'mean':
-            self.reduce = mean_reduce
-        elif reducer == 'sum':
-            self.reduce = sum_reduce
         
     def forward(self, g, feature, snorm_n):
         h_in = feature   # to be used for residual connection
+
         if self.dgl_builtin == False:
-            if self.graph_norm:
-                feature = feature * snorm_n # normalize activation w.r.t. graph size
             g.ndata['h'] = feature
-            g.update_all(msg, self.reduce)
+            g.update_all(msg, reduce)
             g.apply_nodes(func=self.apply_mod)
             h = g.ndata['h'] # result of graph convolution
-            # Note that is already done in builtin
-            if self.graph_norm:
-                h = h * snorm_n # normalize activation w.r.t. graph size
         else:
             h = self.conv(g, feature)
+
+        if self.graph_norm:
+            h = h * snorm_n # normalize activation w.r.t. graph size
 
         
         if self.batch_norm:

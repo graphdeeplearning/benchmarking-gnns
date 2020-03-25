@@ -36,18 +36,18 @@ class GCNNet(nn.Module):
         # input
         self.layers.append(GCNLayer(in_dim, hidden_dim, F.relu, dropout,
             self.graph_norm, self.batch_norm, self.residual,
-            reducer='sum', dgl_builtin=self.dgl_builtin))
+            dgl_builtin=self.dgl_builtin))
 
         # hidden
         self.layers.extend(nn.ModuleList([GCNLayer(hidden_dim, hidden_dim,
             F.relu, dropout, self.graph_norm, self.batch_norm, self.residual,
-            reducer='sum', dgl_builtin=self.dgl_builtin)
+            dgl_builtin=self.dgl_builtin)
             for _ in range(n_layers-1)]))
 
         # output
         self.layers.append(GCNLayer(hidden_dim, n_classes, None, 0,
             self.graph_norm, self.batch_norm, self.residual,
-            reducer='sum', dgl_builtin=self.dgl_builtin))
+            dgl_builtin=self.dgl_builtin))
 
         self.dropout = nn.Dropout(p=dropout)
 

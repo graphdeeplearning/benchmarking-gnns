@@ -29,7 +29,7 @@
         "residual": false,
         "in_feat_dropout": 0.5,
         "dropout": 0.5,
-        "graph_norm": true,
+        "graph_norm": false,
         "batch_norm": false,
         "self_loop": true
     }
