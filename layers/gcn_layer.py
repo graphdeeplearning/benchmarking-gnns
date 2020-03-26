@@ -1,7 +1,9 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
 import dgl.function as fn
+from dgl.nn.pytorch import GraphConv
 
 """
     GCN: Graph Convolutional Networks
@@ -31,36 +33,47 @@ class GCNLayer(nn.Module):
     """
         Param: [in_dim, out_dim]
     """
-    def __init__(self, in_dim, out_dim, activation, dropout, graph_norm, batch_norm, residual=False):
+    def __init__(self, in_dim, out_dim, activation, dropout, graph_norm, batch_norm, residual=False, dgl_builtin=False):
         super().__init__()
         self.in_channels = in_dim
         self.out_channels = out_dim
         self.graph_norm = graph_norm
         self.batch_norm = batch_norm
         self.residual = residual
+        self.dgl_builtin = dgl_builtin
         
         if in_dim != out_dim:
             self.residual = False
         
-        self.apply_mod = NodeApplyModule(in_dim, out_dim)
         self.batchnorm_h = nn.BatchNorm1d(out_dim)
         self.activation = activation
         self.dropout = nn.Dropout(dropout)
+        if self.dgl_builtin == False:
+            self.apply_mod = NodeApplyModule(in_dim, out_dim)
+        else:
+            self.conv = GraphConv(in_dim, out_dim)
+
         
     def forward(self, g, feature, snorm_n):
-
         h_in = feature   # to be used for residual connection
-        g.ndata['h'] = feature
-        g.update_all(msg, reduce)
-        g.apply_nodes(func=self.apply_mod)
-        h = g.ndata['h'] # result of graph convolution
-        
+
+        if self.dgl_builtin == False:
+            g.ndata['h'] = feature
+            g.update_all(msg, reduce)
+            g.apply_nodes(func=self.apply_mod)
+            h = g.ndata['h'] # result of graph convolution
+        else:
+            h = self.conv(g, feature)
+
         if self.graph_norm:
             h = h * snorm_n # normalize activation w.r.t. graph size
+
+        
         if self.batch_norm:
             h = self.batchnorm_h(h) # batch normalization  
-        
-        h = self.activation(h)
+       
+        if self.activation:
+            h = self.activation(h)
         
         if self.residual:
             h = h_in + h # residual connection

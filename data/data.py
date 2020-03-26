@@ -6,6 +6,7 @@ from data.molecules import MoleculeDataset
 from data.TUs import TUsDataset
 from data.SBMs import SBMsDataset
 from data.TSP import TSPDataset
+from data.CitationGraphs import CitationGraphsDataset
 
 def LoadData(DATASET_NAME):
     """
@@ -34,3 +35,8 @@ def LoadData(DATASET_NAME):
     # handling for TSP dataset
     if DATASET_NAME == 'TSP':
         return TSPDataset(DATASET_NAME)
+
+    # handling for the CITATIONGRAPHS Datasets
+    CITATIONGRAPHS_DATASETS = ['CORA', 'CITESEER', 'PUBMED']
+    if DATASET_NAME in CITATIONGRAPHS_DATASETS: 
+        return CitationGraphsDataset(DATASET_NAME)

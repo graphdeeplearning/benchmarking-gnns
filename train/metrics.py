@@ -23,6 +23,12 @@ def accuracy_MNIST_CIFAR(scores, targets):
     acc = (scores==targets).float().sum().item()
     return acc
 
+def accuracy_CITATION_GRAPH(scores, targets):
+    scores = scores.detach().argmax(dim=1)
+    acc = (scores==targets).float().sum().item()
+    acc = acc / len(targets)
+    return acc
+
 
 def accuracy_SBM(scores, targets):
     S = targets.cpu().numpy()

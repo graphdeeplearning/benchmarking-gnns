@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from dgl.nn.pytorch import GATConv
+
 """
     GAT: Graph Attention Network
     Graph Attention Networks (Veličković et al., ICLR 2018)
@@ -51,35 +53,76 @@ class GATLayer(nn.Module):
     """
         Param: [in_dim, out_dim, n_heads]
     """
-    def __init__(self, in_dim, out_dim, num_heads, dropout, graph_norm, batch_norm, residual=False):
+    def __init__(self, in_dim, out_dim, num_heads, dropout, graph_norm, batch_norm, residual=False, activation=None, dgl_builtin=False):
+
         super().__init__()
-        self.in_channels = in_dim
-        self.out_channels = out_dim
-        self.num_heads = num_heads
-        self.residual = residual
-        
-        if in_dim != (out_dim*num_heads):
-            self.residual = False
-        
-        self.heads = nn.ModuleList()
-        for i in range(num_heads):
-            self.heads.append(GATHeadLayer(in_dim, out_dim, dropout, graph_norm, batch_norm))
-        self.merge = 'cat' 
+        self.dgl_builtin = dgl_builtin
+
+        if dgl_builtin == False:
+            self.in_channels = in_dim
+            self.out_channels = out_dim
+            self.num_heads = num_heads
+            self.residual = residual
+            
+            if in_dim != (out_dim*num_heads):
+                self.residual = False
+            
+            self.heads = nn.ModuleList()
+            for i in range(num_heads):
+                self.heads.append(GATHeadLayer(in_dim, out_dim, dropout, graph_norm, batch_norm))
+            self.merge = 'cat' 
+
+        else:
+            self.in_channels = in_dim
+            self.out_channels = out_dim
+            self.num_heads = num_heads
+            self.residual = residual
+            self.activation = activation
+            self.graph_norm = graph_norm
+            self.batch_norm = batch_norm
+            
+            if in_dim != (out_dim*num_heads):
+                self.residual = False
+
+            # Both feat and weighting dropout tied together here
+            self.conv = GATConv(in_dim, out_dim, num_heads, dropout, dropout)
+            self.batchnorm_h = nn.BatchNorm1d(out_dim)
+
+
 
     def forward(self, g, h, snorm_n):
-        h_in = h # for residual connection
-        head_outs = [attn_head(g, h, snorm_n) for attn_head in self.heads]
-        
-        if self.merge == 'cat':
-            h = torch.cat(head_outs, dim=1)
+        if self.dgl_builtin == False:
+            h_in = h # for residual connection
+            head_outs = [attn_head(g, h, snorm_n) for attn_head in self.heads]
+            
+            if self.merge == 'cat':
+                h = torch.cat(head_outs, dim=1)
+            else:
+                h = torch.mean(torch.stack(head_outs))
+            
+            if self.residual:
+                h = h_in + h # residual connection
+            return h
         else:
-            h = torch.mean(torch.stack(head_outs))
-        
-        if self.residual:
-            h = h_in + h # residual connection
-        return h
+            h_in = h # for residual connection
+
+            h = self.conv(g, h).flatten(1)
+
+            if self.graph_norm:
+                h = h * snorm_n
+            if self.batch_norm:
+                h = self.batchnorm_h(h)
+            
+            if self.residual:
+                h = h_in + h # residual connection
+
+            if self.activation:
+                h = self.activation(h)
+            return h
         
     def __repr__(self):
         return '{}(in_channels={}, out_channels={}, heads={}, residual={})'.format(self.__class__.__name__,
                                              self.in_channels,
                                              self.out_channels, self.num_heads, self.residual)
+
+
