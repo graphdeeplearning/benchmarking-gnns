@@ -17,14 +17,15 @@ from layers.node_apply_layer import NodeApply
 class GraphSageLayer(nn.Module):
 
     def __init__(self, in_feats, out_feats, activation, dropout,
-                 aggregator_type, residual=False, bn=False, bias=True,
+                 aggregator_type, graph_norm, batch_norm, residual=False, bias=True,
                  dgl_builtin=False):
         super().__init__()
         self.in_channels = in_feats
         self.out_channels = out_feats
         self.aggregator_type = aggregator_type
+        self.graph_norm = graph_norm
+        self.batch_norm = batch_norm
         self.residual = residual
-        self.bn = bn
         self.dgl_builtin = dgl_builtin
         
         if in_feats != out_feats:
@@ -46,7 +47,7 @@ class GraphSageLayer(nn.Module):
             self.sageconv = SAGEConv(in_feats, out_feats, aggregator_type,
                     dropout, activation=activation)
         
-        if bn:
+        if self.batch_norm:
             self.batchnorm_h = nn.BatchNorm1d(out_feats)
 
     def forward(self, g, h, snorm_n=None):
@@ -61,10 +62,10 @@ class GraphSageLayer(nn.Module):
         else:
             h = self.sageconv(g, h)
 
-        if snorm_n is not None:
+        if self.graph_norm:
             h = h * snorm_n
 
-        if self.bn:
+        if self.batch_norm:
             h = self.batchnorm_h(h)
         
         if self.residual:

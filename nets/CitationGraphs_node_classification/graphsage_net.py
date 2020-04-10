@@ -36,14 +36,14 @@ class GraphSageNet(nn.Module):
         # Input
         self.layers.append(GraphSageLayer(in_dim, hidden_dim, F.relu,
             dropout, aggregator_type, self.residual,
-            bn=bnorm, dgl_builtin=dgl_builtin))
+            batch_norm=bnorm, dgl_builtin=dgl_builtin))
         # Hidden layers
         self.layers.extend(nn.ModuleList([GraphSageLayer(hidden_dim,
             hidden_dim, F.relu, dropout, aggregator_type, self.residual,
-            bn=bnorm, dgl_builtin=dgl_builtin) for _ in range(n_layers-1)]))
+            batch_norm=bnorm, dgl_builtin=dgl_builtin) for _ in range(n_layers-1)]))
         # Output layer
         self.layers.append(GraphSageLayer(hidden_dim, n_classes, None,
-            dropout, aggregator_type, self.residual, bn=bnorm,
+            dropout, aggregator_type, self.residual, batch_norm=bnorm,
             dgl_builtin=dgl_builtin))
         
     def forward(self, g, h, e, snorm_n, snorm_e):

@@ -54,7 +54,7 @@ class EntropyLoss(nn.Module):
 class DiffPoolLayer(nn.Module):
 
     def __init__(self, input_dim, assign_dim, output_feat_dim,
-                 activation, dropout, aggregator_type, link_pred):
+                 activation, dropout, aggregator_type, graph_norm, batch_norm, link_pred):
         super().__init__()
         self.embedding_dim = input_dim
         self.assign_dim = assign_dim
@@ -65,20 +65,24 @@ class DiffPoolLayer(nn.Module):
             output_feat_dim,
             activation,
             dropout,
-            aggregator_type)
+            aggregator_type,
+            graph_norm,
+            batch_norm)
         self.pool_gc = GraphSageLayer(
             input_dim,
             assign_dim,
             activation,
             dropout,
-            aggregator_type)
+            aggregator_type, 
+            graph_norm,
+            batch_norm)
         self.reg_loss = nn.ModuleList([])
         self.loss_log = {}
         self.reg_loss.append(EntropyLoss())
 
-    def forward(self, g, h):
-        feat = self.feat_gc(g, h)
-        assign_tensor = self.pool_gc(g, h)
+    def forward(self, g, h, snorm_n):
+        feat = self.feat_gc(g, h, snorm_n)
+        assign_tensor = self.pool_gc(g, h, snorm_n)
         device = feat.device
         assign_tensor_masks = []
         batch_size = len(g.batch_num_nodes)

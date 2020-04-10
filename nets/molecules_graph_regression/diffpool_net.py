@@ -62,18 +62,18 @@ class DiffPoolNet(nn.Module):
         self.gc_before_pool = nn.ModuleList()
 
         self.assign_dim = net_params['assign_dim']
-        self.bn = True
+        # self.bn = True
         self.num_aggs = 1
 
         # constructing layers
         # layers before diffpool
         assert n_layers >= 3, "n_layers too few"
-        self.gc_before_pool.append(GraphSageLayer(hidden_dim, hidden_dim, activation, dropout, aggregator_type, self.residual, self.bn))
+        self.gc_before_pool.append(GraphSageLayer(hidden_dim, hidden_dim, activation, dropout, aggregator_type, self.graph_norm, self.batch_norm, self.residual))
         
         for _ in range(n_layers - 2):
-            self.gc_before_pool.append(GraphSageLayer(hidden_dim, hidden_dim, activation, dropout, aggregator_type, self.residual, self.bn))
+            self.gc_before_pool.append(GraphSageLayer(hidden_dim, hidden_dim, activation, dropout, aggregator_type, self.graph_norm, self.batch_norm, self.residual))
         
-        self.gc_before_pool.append(GraphSageLayer(hidden_dim, embedding_dim, None, dropout, aggregator_type, self.residual))
+        self.gc_before_pool.append(GraphSageLayer(hidden_dim, embedding_dim, None, dropout, aggregator_type, self.graph_norm, self.batch_norm, self.residual))
 
         
         assign_dims = []
@@ -87,7 +87,7 @@ class DiffPoolNet(nn.Module):
             pool_embedding_dim = embedding_dim
 
         self.first_diffpool_layer = DiffPoolLayer(pool_embedding_dim, self.assign_dim, hidden_dim,
-                                                  activation, dropout, aggregator_type, self.link_pred)
+                                                  activation, dropout, aggregator_type, self.graph_norm, self.batch_norm, self.link_pred)
         gc_after_per_pool = nn.ModuleList()
 
         # list of list of GNN modules, each list after one diffpool operation
@@ -180,7 +180,7 @@ class DiffPoolNet(nn.Module):
             readout = dgl.max_nodes(g, 'h')
             out_all.append(readout)
 
-        adj, h = self.first_diffpool_layer(g, g_embedding)
+        adj, h = self.first_diffpool_layer(g, g_embedding, snorm_n)
         node_per_pool_graph = int(adj.size()[0] / self.batch_size)
 
         h, adj = self.batch2tensor(adj, h, node_per_pool_graph)
