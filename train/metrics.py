@@ -32,7 +32,7 @@ def accuracy_CITATION_GRAPH(scores, targets):
 
 def accuracy_SBM(scores, targets):
     S = targets.cpu().numpy()
-    C = np.argmax( torch.nn.Softmax(dim=0)(scores).cpu().detach().numpy() , axis=1 )
+    C = np.argmax( torch.nn.Softmax(dim=1)(scores).cpu().detach().numpy() , axis=1 )
     CM = confusion_matrix(S,C).astype(np.float32)
     nb_classes = CM.shape[0]
     targets = targets.cpu().detach().numpy()
