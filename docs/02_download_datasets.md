@@ -64,7 +64,26 @@ Script [script_download_TSP.sh](../data/script_download_TSP.sh) is located here.
 
 <br>
 
-## 6. All datasets
+## 6. CSL dataset
+CSL size is 27KB.
+
+```
+# At the root of the project
+cd data/ 
+bash script_download_CSL.sh
+```
+Script [script_download_CSL.sh](../data/script_download_CSL.sh) is located here. 
+
+<br>
+
+## 7. COLLAB dataset
+
+Nothing to do. The COLLAB dataset files will be automatically downloaded from OGB when running the experiment files for COLLAB.
+
+
+<br>
+
+## 8. All datasets
 
 ```
 # At the root of the project

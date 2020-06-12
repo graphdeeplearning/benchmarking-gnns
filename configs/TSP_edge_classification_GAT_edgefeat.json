@@ -1,0 +1,39 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 1
+    },
+    
+    "model": "GAT",
+    "dataset": "TSP",
+    
+    "out_dir": "out/TSP_edge_classification/GAT/edgefeat/",
+    
+    "params": {
+        "seed": 41,
+        "epochs": 500,
+        "batch_size": 64,
+        "init_lr": 0.001,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 10,
+        "min_lr": 1e-5,
+        "weight_decay": 0.0,
+        "print_epoch_interval": 1,
+        "max_time": 12
+    },
+    
+    "net_params": {
+        "L": 4,
+        "hidden_dim": 15,
+        "out_dim": 120,
+        "residual": true,
+        "readout": "mean",
+        "n_heads": 8,
+        "in_feat_dropout": 0.0,
+        "dropout": 0.0,
+        "batch_norm": true,
+        "self_loop": false,
+        "layer_type": "edgefeat",
+        "edge_feat": false
+    }
+}

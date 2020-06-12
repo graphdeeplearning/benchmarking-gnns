@@ -3,9 +3,12 @@ channels:
 - pytorch 
 - dglteam
 - conda-forge
+- anaconda
+- defaults
 dependencies:
 - python=3.7.4
 - python-dateutil=2.8.0
+- pip=19.2.3
 - pytorch=1.3
 - torchvision==0.4.2
 - pillow==6.1
@@ -14,6 +17,7 @@ dependencies:
 - matplotlib=3.1.0
 - tensorboard=1.14.0
 - tensorboardx=1.8
+- future=0.18.2
 - absl-py
 - networkx=2.3
 - scikit-learn=0.21.2
@@ -33,3 +37,8 @@ dependencies:
 - scikit-image=0.15.0
 - requests==2.22.0
 - tqdm==4.43.0
+- pip:
+  - tensorflow==2.1.0
+  - tensorflow-estimator==2.1.0
+  - tensorboard==2.1.1
+  - ogb==1.1.1

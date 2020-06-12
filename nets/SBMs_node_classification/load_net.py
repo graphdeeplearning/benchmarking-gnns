@@ -10,6 +10,8 @@ from nets.SBMs_node_classification.graphsage_net import GraphSageNet
 from nets.SBMs_node_classification.mlp_net import MLPNet
 from nets.SBMs_node_classification.gin_net import GINNet
 from nets.SBMs_node_classification.mo_net import MoNet as MoNet_
+from nets.SBMs_node_classification.ring_gnn_net import RingGNNNet
+from nets.SBMs_node_classification.three_wl_gnn_net import ThreeWLGNNNet
 
 
 def GatedGCN(net_params):
@@ -33,6 +35,13 @@ def GIN(net_params):
 def MoNet(net_params):
     return MoNet_(net_params)
 
+def RingGNN(net_params):
+    return RingGNNNet(net_params)
+
+def ThreeWLGNN(net_params):
+    return ThreeWLGNNNet(net_params)
+
+
 def gnn_model(MODEL_NAME, net_params):
     models = {
         'GatedGCN': GatedGCN,
@@ -41,7 +50,9 @@ def gnn_model(MODEL_NAME, net_params):
         'GraphSage': GraphSage,
         'MLP': MLP,
         'GIN': GIN,
-        'MoNet': MoNet
+        'MoNet': MoNet,
+        'RingGNN': RingGNN,
+        '3WLGNN': ThreeWLGNN
     }
         
     return models[MODEL_NAME](net_params)

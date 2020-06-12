@@ -6,7 +6,9 @@ from data.molecules import MoleculeDataset
 from data.TUs import TUsDataset
 from data.SBMs import SBMsDataset
 from data.TSP import TSPDataset
-from data.CitationGraphs import CitationGraphsDataset
+from data.COLLAB import COLLABDataset
+from data.CSL import CSLDataset
+
 
 def LoadData(DATASET_NAME):
     """
@@ -23,7 +25,7 @@ def LoadData(DATASET_NAME):
         return MoleculeDataset(DATASET_NAME)
 
     # handling for the TU Datasets
-    TU_DATASETS = ['COLLAB', 'ENZYMES', 'DD', 'PROTEINS_full']
+    TU_DATASETS = ['ENZYMES', 'DD', 'PROTEINS_full']
     if DATASET_NAME in TU_DATASETS: 
         return TUsDataset(DATASET_NAME)
 
@@ -36,7 +38,11 @@ def LoadData(DATASET_NAME):
     if DATASET_NAME == 'TSP':
         return TSPDataset(DATASET_NAME)
 
-    # handling for the CITATIONGRAPHS Datasets
-    CITATIONGRAPHS_DATASETS = ['CORA', 'CITESEER', 'PUBMED']
-    if DATASET_NAME in CITATIONGRAPHS_DATASETS: 
-        return CitationGraphsDataset(DATASET_NAME)
+    # handling for COLLAB dataset
+    if DATASET_NAME == 'OGBL-COLLAB':
+        return COLLABDataset(DATASET_NAME)
+
+    # handling for the CSL (Circular Skip Links) Dataset
+    if DATASET_NAME == 'CSL': 
+        return CSLDataset(DATASET_NAME)
+    

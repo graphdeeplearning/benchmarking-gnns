@@ -1,0 +1,36 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 0
+    },
+    
+    "model": "GraphSage",
+    "dataset": "ZINC",
+    
+    "out_dir": "out/molecules_graph_regression/",
+    
+    "params": {
+        "seed": 41,
+        "epochs": 1000,
+        "batch_size": 128,
+        "init_lr": 0.001,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 10,
+        "min_lr": 1e-5,
+        "weight_decay": 0.0,
+        "print_epoch_interval": 5,
+        "max_time": 12
+    },
+    
+    "net_params": {
+        "L": 16,
+        "hidden_dim": 101,
+        "out_dim": 101,
+        "residual": true,
+        "readout": "mean",
+        "in_feat_dropout": 0.0,
+        "dropout": 0.0,
+        "batch_norm": true,
+        "sage_aggregator": "maxpool"
+    }
+}

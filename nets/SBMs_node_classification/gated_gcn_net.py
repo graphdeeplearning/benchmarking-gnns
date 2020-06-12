@@ -25,28 +25,34 @@ class GatedGCNNet(nn.Module):
         dropout = net_params['dropout']
         n_layers = net_params['L']
         self.readout = net_params['readout']
-        self.graph_norm = net_params['graph_norm']
         self.batch_norm = net_params['batch_norm']
         self.residual = net_params['residual']
         self.n_classes = n_classes
         self.device = net_params['device']
+        self.pos_enc = net_params['pos_enc']
+        if self.pos_enc:
+            pos_enc_dim = net_params['pos_enc_dim']
+            self.embedding_pos_enc = nn.Linear(pos_enc_dim, hidden_dim)
         
         self.embedding_h = nn.Embedding(in_dim_node, hidden_dim) # node feat is an integer
         self.embedding_e = nn.Linear(in_dim_edge, hidden_dim) # edge feat is a float
         self.layers = nn.ModuleList([ GatedGCNLayer(hidden_dim, hidden_dim, dropout,
-                                                       self.graph_norm, self.batch_norm, self.residual) for _ in range(n_layers) ])
+                                                    self.batch_norm, self.residual) for _ in range(n_layers) ])
         self.MLP_layer = MLPReadout(hidden_dim, n_classes)
         
 
-    def forward(self, g, h, e, snorm_n, snorm_e):
+    def forward(self, g, h, e, h_pos_enc=None):
 
         # input embedding
         h = self.embedding_h(h)
+        if self.pos_enc:
+            h_pos_enc = self.embedding_pos_enc(h_pos_enc.float()) 
+            h = h + h_pos_enc
         e = self.embedding_e(e)
         
         # res gated convnets
         for conv in self.layers:
-            h, e = conv(g, h, e, snorm_n, snorm_e)
+            h, e = conv(g, h, e)
 
         # output
         h_out = self.MLP_layer(h)

@@ -181,14 +181,59 @@ class TUsDataset(torch.utils.data.Dataset):
         # The input samples is a list of pairs (graph, label).
         graphs, labels = map(list, zip(*samples))
         labels = torch.tensor(np.array(labels))
-        tab_sizes_n = [ graphs[i].number_of_nodes() for i in range(len(graphs))]
-        tab_snorm_n = [ torch.FloatTensor(size,1).fill_(1./float(size)) for size in tab_sizes_n ]
-        snorm_n = torch.cat(tab_snorm_n).sqrt()  
-        tab_sizes_e = [ graphs[i].number_of_edges() for i in range(len(graphs))]
-        tab_snorm_e = [ torch.FloatTensor(size,1).fill_(1./float(size)) for size in tab_sizes_e ]
-        snorm_e = torch.cat(tab_snorm_e).sqrt()
+        #tab_sizes_n = [ graphs[i].number_of_nodes() for i in range(len(graphs))]
+        #tab_snorm_n = [ torch.FloatTensor(size,1).fill_(1./float(size)) for size in tab_sizes_n ]
+        #snorm_n = torch.cat(tab_snorm_n).sqrt()  
+        #tab_sizes_e = [ graphs[i].number_of_edges() for i in range(len(graphs))]
+        #tab_snorm_e = [ torch.FloatTensor(size,1).fill_(1./float(size)) for size in tab_sizes_e ]
+        #snorm_e = torch.cat(tab_snorm_e).sqrt()
         batched_graph = dgl.batch(graphs)
-        return batched_graph, labels, snorm_n, snorm_e
+        
+        return batched_graph, labels
+    
+    
+    # prepare dense tensors for GNNs using them; such as RingGNN, 3WLGNN
+    def collate_dense_gnn(self, samples):
+        # The input samples is a list of pairs (graph, label).
+        graphs, labels = map(list, zip(*samples))
+        labels = torch.tensor(np.array(labels))
+        #tab_sizes_n = [ graphs[i].number_of_nodes() for i in range(len(graphs))]
+        #tab_snorm_n = [ torch.FloatTensor(size,1).fill_(1./float(size)) for size in tab_sizes_n ]
+        #snorm_n = tab_snorm_n[0][0].sqrt()  
+        
+        #batched_graph = dgl.batch(graphs)
+    
+        g = graphs[0]
+        adj = self._sym_normalize_adj(g.adjacency_matrix().to_dense())        
+        """
+            Adapted from https://github.com/leichen2018/Ring-GNN/
+            Assigning node and edge feats::
+            we have the adjacency matrix in R^{n x n}, the node features in R^{d_n} and edge features R^{d_e}.
+            Then we build a zero-initialized tensor, say T, in R^{(1 + d_n + d_e) x n x n}. T[0, :, :] is the adjacency matrix.
+            The diagonal T[1:1+d_n, i, i], i = 0 to n-1, store the node feature of node i. 
+            The off diagonal T[1+d_n:, i, j] store edge features of edge(i, j).
+        """
+
+        zero_adj = torch.zeros_like(adj)
+        
+        in_dim = g.ndata['feat'].shape[1]
+        
+        # use node feats to prepare adj
+        adj_node_feat = torch.stack([zero_adj for j in range(in_dim)])
+        adj_node_feat = torch.cat([adj.unsqueeze(0), adj_node_feat], dim=0)
+        
+        for node, node_feat in enumerate(g.ndata['feat']):
+            adj_node_feat[1:, node, node] = node_feat
+
+        x_node_feat = adj_node_feat.unsqueeze(0)
+        
+        return x_node_feat, labels
+    
+    def _sym_normalize_adj(self, adj):
+        deg = torch.sum(adj, dim = 0)#.squeeze()
+        deg_inv = torch.where(deg>0, 1./torch.sqrt(deg), torch.zeros(deg.size()))
+        deg_inv = torch.diag(deg_inv)
+        return torch.mm(deg_inv, torch.mm(adj, deg_inv))
     
     
     def _add_self_loops(self):

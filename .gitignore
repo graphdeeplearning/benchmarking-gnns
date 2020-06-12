@@ -25,4 +25,13 @@ data/TSP/*.pkl
 data/TSP/*.zip
 data/TSP/pyconcorde/
 
+#COLLAB
+data/COLLAB/*
+dataset/
+
+#CSL
+data/CSL/*.pkl
+data/CSL/*.zip
+data/CSL/*.pt
+
 

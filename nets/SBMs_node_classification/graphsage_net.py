@@ -28,8 +28,7 @@ class GraphSageNet(nn.Module):
         in_feat_dropout = net_params['in_feat_dropout']
         dropout = net_params['dropout']
         aggregator_type = net_params['sage_aggregator']
-        n_layers = net_params['L']
-        graph_norm = net_params['graph_norm']      
+        n_layers = net_params['L']   
         batch_norm = net_params['batch_norm']
         residual = net_params['residual']
         self.readout = net_params['readout']
@@ -40,12 +39,12 @@ class GraphSageNet(nn.Module):
         self.in_feat_dropout = nn.Dropout(in_feat_dropout)
         
         self.layers = nn.ModuleList([GraphSageLayer(hidden_dim, hidden_dim, F.relu,
-                                              dropout, aggregator_type, graph_norm, batch_norm, residual) for _ in range(n_layers-1)])
-        self.layers.append(GraphSageLayer(hidden_dim, out_dim, F.relu, dropout, aggregator_type, graph_norm, batch_norm, residual))
+                                              dropout, aggregator_type, batch_norm, residual) for _ in range(n_layers-1)])
+        self.layers.append(GraphSageLayer(hidden_dim, out_dim, F.relu, dropout, aggregator_type, batch_norm, residual))
         self.MLP_layer = MLPReadout(out_dim, n_classes)
         
 
-    def forward(self, g, h, e, snorm_n, snorm_e):
+    def forward(self, g, h, e):
 
         # input embedding
         h = self.embedding_h(h)
@@ -53,7 +52,7 @@ class GraphSageNet(nn.Module):
 
         # graphsage
         for conv in self.layers:
-            h = conv(g, h, snorm_n)
+            h = conv(g, h)
 
         # output
         h_out = self.MLP_layer(h)

@@ -32,17 +32,22 @@
 
 <br>
 
-## 5. Adding a new graph neural network
+## 5. Adding a Message-passing GCN
 
-[Step-by-step directions](./docs/05_add_gnn.md) to add a GNN to the benchmark.
+[Step-by-step directions](./docs/05_add_mpgcn.md) to add a MP-GCN to the benchmark.
 
 
+<br>
+
+## 6. Adding a Weisfeiler-Lehman GNN
+
+[Step-by-step directions](./docs/06_add_wlgnn.md) to add a WL-GNN to the benchmark.
 
 
 
 <br>
 
-## 6. Reference 
+## 7. Reference 
 
 ```
 @article{dwivedi2020benchmarkgnns,

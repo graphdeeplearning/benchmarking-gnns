@@ -39,7 +39,7 @@ class MLPNet(nn.Module):
         
         self.readout_mlp = MLPReadout(out_dim, 1)    # 1 out dim since regression problem
 
-    def forward(self, g, h, e, snorm_n, snorm_e):
+    def forward(self, g, h, e):
         h = self.embedding_h(h)
         h = self.in_feat_dropout(h)
         h = self.feat_mlp(h)

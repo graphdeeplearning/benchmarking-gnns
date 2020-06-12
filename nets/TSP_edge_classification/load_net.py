@@ -10,6 +10,8 @@ from nets.TSP_edge_classification.graphsage_net import GraphSageNet
 from nets.TSP_edge_classification.gin_net import GINNet
 from nets.TSP_edge_classification.mo_net import MoNet as MoNet_
 from nets.TSP_edge_classification.mlp_net import MLPNet
+from nets.TSP_edge_classification.ring_gnn_net import RingGNNNet
+from nets.TSP_edge_classification.three_wl_gnn_net import ThreeWLGNNNet
 
 
 def GatedGCN(net_params):
@@ -33,6 +35,12 @@ def MoNet(net_params):
 def MLP(net_params):
     return MLPNet(net_params)
 
+def RingGNN(net_params):
+    return RingGNNNet(net_params)
+
+def ThreeWLGNN(net_params):
+    return ThreeWLGNNNet(net_params)
+
 def gnn_model(MODEL_NAME, net_params):
     models = {
         'GatedGCN': GatedGCN,
@@ -41,7 +49,9 @@ def gnn_model(MODEL_NAME, net_params):
         'GraphSage': GraphSage,
         'GIN': GIN,
         'MoNet': MoNet,
-        'MLP': MLP
+        'MLP': MLP,
+        'RingGNN': RingGNN,
+        '3WLGNN': ThreeWLGNN
     }
         
     return models[MODEL_NAME](net_params)

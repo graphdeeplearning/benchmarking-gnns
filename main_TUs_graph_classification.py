@@ -43,7 +43,6 @@ class DotDict(dict):
 
 from nets.TUs_graph_classification.load_net import gnn_model # import GNNs
 from data.data import LoadData # import dataset
-from train.train_TUs_graph_classification import train_epoch, evaluate_network # import train functions
 
 
 
@@ -62,10 +61,6 @@ def gpu_setup(use_gpu, gpu_id):
         print('cuda not available')
         device = torch.device("cpu")
     return device
-
-
-
-
 
 
 
@@ -93,6 +88,7 @@ def view_model_param(MODEL_NAME, net_params):
 def train_val_pipeline(MODEL_NAME, DATASET_NAME, params, net_params, dirs):
     avg_test_acc = []
     avg_train_acc = []
+    avg_convergence_epochs = []
 
     t0 = time.time()
     per_epoch_time = []
@@ -124,7 +120,7 @@ def train_val_pipeline(MODEL_NAME, DATASET_NAME, params, net_params, dirs):
             random.seed(params['seed'])
             np.random.seed(params['seed'])
             torch.manual_seed(params['seed'])
-            if device == 'cuda':
+            if device.type == 'cuda':
                 torch.cuda.manual_seed(params['seed'])
 
             print("RUN NUMBER: ", split_number)
@@ -148,19 +144,36 @@ def train_val_pipeline(MODEL_NAME, DATASET_NAME, params, net_params, dirs):
             # batching exception for Diffpool
             drop_last = True if MODEL_NAME == 'DiffPool' else False
 
-            train_loader = DataLoader(trainset, batch_size=params['batch_size'], shuffle=True, drop_last=drop_last, collate_fn=dataset.collate)
-            val_loader = DataLoader(valset, batch_size=params['batch_size'], shuffle=False, drop_last=drop_last, collate_fn=dataset.collate)
-            test_loader = DataLoader(testset, batch_size=params['batch_size'], shuffle=False, drop_last=drop_last, collate_fn=dataset.collate)
+            if MODEL_NAME in ['RingGNN', '3WLGNN']:
+                # import train functions specific for WL-GNNs
+                from train.train_TUs_graph_classification import train_epoch_dense as train_epoch, evaluate_network_dense as evaluate_network
 
+                train_loader = DataLoader(trainset, shuffle=True, collate_fn=dataset.collate_dense_gnn)
+                val_loader = DataLoader(valset, shuffle=False, collate_fn=dataset.collate_dense_gnn)
+                test_loader = DataLoader(testset, shuffle=False, collate_fn=dataset.collate_dense_gnn)
 
+            else:
+                # import train functions for all other GCNs
+                from train.train_TUs_graph_classification import train_epoch_sparse as train_epoch, evaluate_network_sparse as evaluate_network
+
+                train_loader = DataLoader(trainset, batch_size=params['batch_size'], shuffle=True, drop_last=drop_last, collate_fn=dataset.collate)
+                val_loader = DataLoader(valset, batch_size=params['batch_size'], shuffle=False, drop_last=drop_last, collate_fn=dataset.collate)
+                test_loader = DataLoader(testset, batch_size=params['batch_size'], shuffle=False, drop_last=drop_last, collate_fn=dataset.collate)
+  
             with tqdm(range(params['epochs'])) as t:
                 for epoch in t:
 
                     t.set_description('Epoch %d' % epoch)    
 
                     start = time.time()
-                    epoch_train_loss, epoch_train_acc, optimizer = train_epoch(model, optimizer, device, train_loader, epoch)
+                    
+                    if MODEL_NAME in ['RingGNN', '3WLGNN']: # since different batch training function for dense GNNs
+                        epoch_train_loss, epoch_train_acc, optimizer = train_epoch(model, optimizer, device, train_loader, epoch, params['batch_size'])
+                    else:   # for all other models common train function
+                        epoch_train_loss, epoch_train_acc, optimizer = train_epoch(model, optimizer, device, train_loader, epoch)
+
                     epoch_val_loss, epoch_val_acc = evaluate_network(model, device, val_loader, epoch)
+                    _, epoch_test_acc = evaluate_network(model, device, test_loader, epoch)
 
                     epoch_train_losses.append(epoch_train_loss)
                     epoch_val_losses.append(epoch_val_loss)
@@ -171,6 +184,7 @@ def train_val_pipeline(MODEL_NAME, DATASET_NAME, params, net_params, dirs):
                     writer.add_scalar('val/_loss', epoch_val_loss, epoch)
                     writer.add_scalar('train/_acc', epoch_train_acc, epoch)
                     writer.add_scalar('val/_acc', epoch_val_acc, epoch)
+                    writer.add_scalar('test/_acc', epoch_test_acc, epoch)
                     writer.add_scalar('learning_rate', optimizer.param_groups[0]['lr'], epoch)
 
                     _, epoch_test_acc = evaluate_network(model, device, test_loader, epoch)
@@ -210,9 +224,11 @@ def train_val_pipeline(MODEL_NAME, DATASET_NAME, params, net_params, dirs):
             _, train_acc = evaluate_network(model, device, train_loader, epoch)    
             avg_test_acc.append(test_acc)   
             avg_train_acc.append(train_acc)
+            avg_convergence_epochs.append(epoch)
 
             print("Test Accuracy [LAST EPOCH]: {:.4f}".format(test_acc))
             print("Train Accuracy [LAST EPOCH]: {:.4f}".format(train_acc))
+            print("Convergence Time (Epochs): {:.4f}".format(epoch))
     
     except KeyboardInterrupt:
         print('-' * 89)
@@ -221,7 +237,7 @@ def train_val_pipeline(MODEL_NAME, DATASET_NAME, params, net_params, dirs):
     
     print("TOTAL TIME TAKEN: {:.4f}hrs".format((time.time()-t0)/3600))
     print("AVG TIME PER EPOCH: {:.4f}s".format(np.mean(per_epoch_time)))
-
+    print("AVG CONVERGENCE Time (Epochs): {:.4f}".format(np.mean(np.array(avg_convergence_epochs))))
     # Final test accuracy value averaged over 10-fold
     print("""\n\n\nFINAL RESULTS\n\nTEST ACCURACY averaged: {:.4f} with s.d. {:.4f}"""          .format(np.mean(np.array(avg_test_acc))*100, np.std(avg_test_acc)*100))
     print("\nAll splits Test Accuracies:\n", avg_test_acc)
@@ -236,28 +252,12 @@ def train_val_pipeline(MODEL_NAME, DATASET_NAME, params, net_params, dirs):
     with open(write_file_name + '.txt', 'w') as f:
         f.write("""Dataset: {},\nModel: {}\n\nparams={}\n\nnet_params={}\n\n{}\n\nTotal Parameters: {}\n\n
     FINAL RESULTS\nTEST ACCURACY averaged: {:.4f} with s.d. {:.4f}\nTRAIN ACCURACY averaged: {:.4f} with s.d. {:.4f}\n\n
-    Total Time Taken: {:.4f} hrs\nAverage Time Per Epoch: {:.4f} s\n\n\nAll Splits Test Accuracies: {}"""\
+    Average Convergence Time (Epochs): {:.4f} with s.d. {:.4f}\nTotal Time Taken: {:.4f} hrs\nAverage Time Per Epoch: {:.4f} s\n\n\nAll Splits Test Accuracies: {}"""\
           .format(DATASET_NAME, MODEL_NAME, params, net_params, model, net_params['total_param'],
                   np.mean(np.array(avg_test_acc))*100, np.std(avg_test_acc)*100,
                   np.mean(np.array(avg_train_acc))*100, np.std(avg_train_acc)*100,
+                  np.mean(avg_convergence_epochs), np.std(avg_convergence_epochs),
                (time.time()-t0)/3600, np.mean(per_epoch_time), avg_test_acc))
-        
-
-    # send results to gmail
-    try:
-        from gmail import send
-        subject = 'Result for Dataset: {}, Model: {}'.format(DATASET_NAME, MODEL_NAME)
-        body = """Dataset: {},\nModel: {}\n\nparams={}\n\nnet_params={}\n\n{}\n\nTotal Parameters: {}\n\n
-    FINAL RESULTS\nTEST ACCURACY averaged: {:.4f} with s.d. {:.4f}\nTRAIN ACCURACY averaged: {:.4f} with s.d. {:.4f}\n\n
-    Total Time Taken: {:.4f} hrs\nAverage Time Per Epoch: {:.4f} s\n\n\nAll Splits Test Accuracies: {}"""\
-          .format(DATASET_NAME, MODEL_NAME, params, net_params, model, net_params['total_param'],
-                  np.mean(np.array(avg_test_acc))*100, np.std(avg_test_acc)*100,
-                  np.mean(np.array(avg_train_acc))*100, np.std(avg_train_acc)*100,
-               (time.time()-t0)/3600, np.mean(per_epoch_time), avg_test_acc)
-        send(subject, body)
-    except:
-        pass
-        
 
 
 
@@ -294,7 +294,7 @@ def main():
     parser.add_argument('--gated', help="Please give a value for gated")
     parser.add_argument('--in_feat_dropout', help="Please give a value for in_feat_dropout")
     parser.add_argument('--dropout', help="Please give a value for dropout")
-    parser.add_argument('--graph_norm', help="Please give a value for graph_norm")
+    parser.add_argument('--layer_norm', help="Please give a value for layer_norm")
     parser.add_argument('--batch_norm', help="Please give a value for batch_norm")
     parser.add_argument('--sage_aggregator', help="Please give a value for sage_aggregator")
     parser.add_argument('--data_mode', help="Please give a value for data_mode")
@@ -378,8 +378,8 @@ def main():
         net_params['in_feat_dropout'] = float(args.in_feat_dropout)
     if args.dropout is not None:
         net_params['dropout'] = float(args.dropout)
-    if args.graph_norm is not None:
-        net_params['graph_norm'] = True if args.graph_norm=='True' else False
+    if args.layer_norm is not None:
+        net_params['layer_norm'] = True if args.layer_norm=='True' else False
     if args.batch_norm is not None:
         net_params['batch_norm'] = True if args.batch_norm=='True' else False
     if args.sage_aggregator is not None:
@@ -414,6 +414,10 @@ def main():
         num_nodes = [dataset.all[i][0].number_of_nodes() for i in range(len(dataset.all))]
         max_num_node = max(num_nodes)
         net_params['assign_dim'] = int(max_num_node * net_params['pool_ratio']) * net_params['batch_size']
+        
+    if MODEL_NAME == 'RingGNN':
+        num_nodes = [dataset.all[i][0].number_of_nodes() for i in range(len(dataset.all))]
+        net_params['avg_node_num'] = int(np.ceil(np.mean(num_nodes)))
     
     root_log_dir = out_dir + 'logs/' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y')
     root_ckpt_dir = out_dir + 'checkpoints/' + MODEL_NAME + "_" + DATASET_NAME + "_GPU" + str(config['gpu']['id']) + "_" + time.strftime('%Hh%Mm%Ss_on_%b_%d_%Y')
@@ -439,6 +443,16 @@ def main():
     
     
 main()    
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -28,8 +28,6 @@ class GMMLayer(nn.Module):
         Aggregator type (``sum``, ``mean``, ``max``).
     dropout :
         Required for dropout of output features.
-    graph_norm : 
-        boolean flag for output features normalization w.r.t. graph sizes.
     batch_norm :
         boolean flag for batch_norm layer.
     residual : 
@@ -39,14 +37,13 @@ class GMMLayer(nn.Module):
     
     """
     def __init__(self, in_dim, out_dim, dim, kernel, aggr_type, dropout,
-                 graph_norm, batch_norm, residual=False, bias=True):
+                 batch_norm, residual=False, bias=True):
         super().__init__()
         
         self.in_dim = in_dim
         self.out_dim = out_dim
         self.dim = dim
         self.kernel = kernel
-        self.graph_norm = graph_norm
         self.batch_norm = batch_norm
         self.residual = residual
         self.dropout = dropout
@@ -84,7 +81,7 @@ class GMMLayer(nn.Module):
         if self.bias is not None:
             init.zeros_(self.bias.data)
     
-    def forward(self, g, h, pseudo, snorm_n):
+    def forward(self, g, h, pseudo):
         h_in = h # for residual connection
         
         g = g.local_var()
@@ -99,9 +96,6 @@ class GMMLayer(nn.Module):
         g.edata['w'] = gaussian
         g.update_all(fn.u_mul_e('h', 'w', 'm'), self._reducer('m', 'h'))
         h = g.ndata['h'].sum(1)
-        
-        if self.graph_norm:
-            h = h* snorm_n # normalize activation w.r.t. graph size
         
         if self.batch_norm:
             h = self.bn_node_h(h) # batch normalization  

@@ -69,7 +69,7 @@ if test -f "$FILE"; then
 	echo -e "$FILE already downloaded."
 else
 	echo -e "\ndownloading $FILE..."
-	curl https://www.dropbox.com/s/zf17n6x6s441s14/SBM_PATTERN.pkl?dl=1 -o SBM_PATTERN.pkl -J -L -k
+	curl https://www.dropbox.com/s/9h6crgk4argc89o/SBM_PATTERN.pkl?dl=1 -o SBM_PATTERN.pkl -J -L -k
 fi
 
 cd ..
@@ -91,6 +91,28 @@ else
 fi
 
 cd ..
+
+
+############
+# CSL 
+############
+
+DIR=CSL/
+cd $DIR
+
+FILE=CSL.zip
+if test -f "$FILE"; then
+	echo -e "$FILE already downloaded."
+else
+	echo -e "\ndownloading $FILE..."
+	curl https://www.dropbox.com/s/rnbkp5ubgk82ocu/CSL.zip?dl=1 -o CSL.zip -J -L -k
+	unzip CSL.zip -d ./
+	rm -r __MACOSX/
+fi
+
+cd ..
+
+
 
 
 

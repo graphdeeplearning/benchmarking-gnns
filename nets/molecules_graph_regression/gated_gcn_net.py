@@ -23,11 +23,14 @@ class GatedGCNNet(nn.Module):
         dropout = net_params['dropout']
         n_layers = net_params['L']
         self.readout = net_params['readout']
-        self.graph_norm = net_params['graph_norm']
         self.batch_norm = net_params['batch_norm']
         self.residual = net_params['residual']
         self.edge_feat = net_params['edge_feat']
         self.device = net_params['device']
+        self.pos_enc = net_params['pos_enc']
+        if self.pos_enc:
+            pos_enc_dim = net_params['pos_enc_dim']
+            self.embedding_pos_enc = nn.Linear(pos_enc_dim, hidden_dim)
         
         self.embedding_h = nn.Embedding(num_atom_type, hidden_dim)
 
@@ -39,22 +42,25 @@ class GatedGCNNet(nn.Module):
         self.in_feat_dropout = nn.Dropout(in_feat_dropout)
         
         self.layers = nn.ModuleList([ GatedGCNLayer(hidden_dim, hidden_dim, dropout,
-                                                       self.graph_norm, self.batch_norm, self.residual) for _ in range(n_layers-1) ]) 
-        self.layers.append(GatedGCNLayer(hidden_dim, out_dim, dropout, self.graph_norm, self.batch_norm, self.residual))
+                                                    self.batch_norm, self.residual) for _ in range(n_layers-1) ]) 
+        self.layers.append(GatedGCNLayer(hidden_dim, out_dim, dropout, self.batch_norm, self.residual))
         self.MLP_layer = MLPReadout(out_dim, 1)   # 1 out dim since regression problem        
         
-    def forward(self, g, h, e, snorm_n, snorm_e):
+    def forward(self, g, h, e, h_pos_enc=None):
 
         # input embedding
         h = self.embedding_h(h)
         h = self.in_feat_dropout(h)
+        if self.pos_enc:
+            h_pos_enc = self.embedding_pos_enc(h_pos_enc.float()) 
+            h = h + h_pos_enc
         if not self.edge_feat: # edge feature set to 1
             e = torch.ones(e.size(0),1).to(self.device)
         e = self.embedding_e(e)   
         
         # convnets
         for conv in self.layers:
-            h, e = conv(g, h, e, snorm_n, snorm_e)
+            h, e = conv(g, h, e)
         g.ndata['h'] = h
         
         if self.readout == "sum":

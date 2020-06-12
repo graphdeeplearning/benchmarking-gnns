@@ -9,6 +9,7 @@ import numpy as np
 
 def MAE(scores, targets):
     MAE = F.l1_loss(scores, targets)
+    MAE = MAE.detach().item()
     return MAE
 
 
@@ -46,7 +47,7 @@ def accuracy_SBM(scores, targets):
                 nb_non_empty_classes += 1
         else:
             pr_classes[r] = 0.0
-    acc = 100.* np.sum(pr_classes)/ float(nb_non_empty_classes)
+    acc = 100.* np.sum(pr_classes)/ float(nb_classes)
     return acc
 
 

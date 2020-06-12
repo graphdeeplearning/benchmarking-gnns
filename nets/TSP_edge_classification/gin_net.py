@@ -25,8 +25,7 @@ class GINNet(nn.Module):
         n_mlp_layers = net_params['n_mlp_GIN']               # GIN
         learn_eps = net_params['learn_eps_GIN']              # GIN
         neighbor_aggr_type = net_params['neighbor_aggr_GIN'] # GIN
-        readout = net_params['readout']                      # this is graph_pooling_type
-        graph_norm = net_params['graph_norm']      
+        readout = net_params['readout']                      # this is graph_pooling_type   
         batch_norm = net_params['batch_norm']
         residual = net_params['residual']
         self.n_classes = n_classes
@@ -41,7 +40,7 @@ class GINNet(nn.Module):
             mlp = MLP(n_mlp_layers, hidden_dim, hidden_dim, hidden_dim)
             
             self.ginlayers.append(GINLayer(ApplyNodeFunc(mlp), neighbor_aggr_type,
-                                           dropout, graph_norm, batch_norm, residual, 0, learn_eps))
+                                           dropout, batch_norm, residual, 0, learn_eps))
 
         # Non-linear function for output of each layer
         # which maps the output of different layers into a prediction score
@@ -56,7 +55,7 @@ class GINNet(nn.Module):
                 )
             )
         
-    def forward(self, g, h, e, snorm_n, snorm_e):
+    def forward(self, g, h, e):
         
         def _edge_feat(edges):
             e = torch.cat([edges.src['h'], edges.dst['h']], dim=1)
@@ -70,7 +69,7 @@ class GINNet(nn.Module):
         hidden_rep = [g.edata['e']]
         
         for i in range(self.n_layers):
-            h = self.ginlayers[i](g, h, snorm_n)
+            h = self.ginlayers[i](g, h)
             g.ndata['h'] = h
             g.apply_edges(_edge_feat)
             hidden_rep.append(g.edata['e'])

@@ -24,8 +24,6 @@ class GINLayer(nn.Module):
         Rquired for batch norm layer; should match out_dim of apply_func if not None.
     dropout :
         Required for dropout of output features.
-    graph_norm : 
-        boolean flag for output features normalization w.r.t. graph sizes.
     batch_norm :
         boolean flag for batch_norm layer.
     residual :
@@ -36,10 +34,9 @@ class GINLayer(nn.Module):
         If True, :math:`\epsilon` will be a learnable parameter.
     
     """
-    def __init__(self, apply_func, aggr_type, dropout, graph_norm, batch_norm, residual=False, init_eps=0, learn_eps=False, activation=None):
+    def __init__(self, apply_func, aggr_type, dropout, batch_norm, residual=False, init_eps=0, learn_eps=False):
         super().__init__()
         self.apply_func = apply_func
-        self.activation = activation
         
         if aggr_type == 'sum':
             self._reducer = fn.sum
@@ -50,7 +47,6 @@ class GINLayer(nn.Module):
         else:
             raise KeyError('Aggregator type {} not recognized.'.format(aggr_type))
             
-        self.graph_norm = graph_norm
         self.batch_norm = batch_norm
         self.residual = residual
         self.dropout = dropout
@@ -69,7 +65,7 @@ class GINLayer(nn.Module):
             
         self.bn_node_h = nn.BatchNorm1d(out_dim)
 
-    def forward(self, g, h, snorm_n):
+    def forward(self, g, h):
         h_in = h # for residual connection
         
         g = g.local_var()
@@ -79,14 +75,10 @@ class GINLayer(nn.Module):
         if self.apply_func is not None:
             h = self.apply_func(h)
 
-        if self.graph_norm:
-            h = h * snorm_n # normalize activation w.r.t. graph size
-        
         if self.batch_norm:
             h = self.bn_node_h(h) # batch normalization  
        
-        if self.activation:
-            h = F.relu(h) # non-linear activation
+        h = F.relu(h) # non-linear activation
         
         if self.residual:
             h = h_in + h # residual connection
@@ -104,7 +96,6 @@ class ApplyNodeFunc(nn.Module):
     def __init__(self, mlp):
         super().__init__()
         self.mlp = mlp
-        self.bn = nn.BatchNorm1d(self.mlp.output_dim)
 
     def forward(self, h):
         h = self.mlp(h)

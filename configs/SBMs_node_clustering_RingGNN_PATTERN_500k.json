@@ -1,0 +1,33 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 0
+    },
+    
+    "model": "RingGNN",
+    "dataset": "SBM_PATTERN",
+    
+    "out_dir": "out/SBMs_node_classification/",
+    
+    "params": {
+        "seed": 41,
+        "epochs": 1000,
+        "batch_size": 4,
+        "init_lr": 0.001,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 5,
+        "min_lr": 1e-5,
+        "weight_decay": 0.0,
+        "print_epoch_interval": 5,
+        "max_time": 12
+    },
+    
+    "net_params": {
+        "L": 2,
+        "hidden_dim": 101,
+        "radius": 2,
+        "residual": false,
+        "dropout": 0.0,
+        "layer_norm": false
+    }
+}

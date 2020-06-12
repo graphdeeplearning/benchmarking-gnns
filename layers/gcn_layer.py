@@ -33,11 +33,10 @@ class GCNLayer(nn.Module):
     """
         Param: [in_dim, out_dim]
     """
-    def __init__(self, in_dim, out_dim, activation, dropout, graph_norm, batch_norm, residual=False, dgl_builtin=False):
+    def __init__(self, in_dim, out_dim, activation, dropout, batch_norm, residual=False, dgl_builtin=False):
         super().__init__()
         self.in_channels = in_dim
         self.out_channels = out_dim
-        self.graph_norm = graph_norm
         self.batch_norm = batch_norm
         self.residual = residual
         self.dgl_builtin = dgl_builtin
@@ -54,7 +53,7 @@ class GCNLayer(nn.Module):
             self.conv = GraphConv(in_dim, out_dim)
 
         
-    def forward(self, g, feature, snorm_n):
+    def forward(self, g, feature):
         h_in = feature   # to be used for residual connection
 
         if self.dgl_builtin == False:
@@ -64,10 +63,6 @@ class GCNLayer(nn.Module):
             h = g.ndata['h'] # result of graph convolution
         else:
             h = self.conv(g, feature)
-
-        if self.graph_norm:
-            h = h * snorm_n # normalize activation w.r.t. graph size
-
         
         if self.batch_norm:
             h = self.batchnorm_h(h) # batch normalization  

@@ -1,0 +1,31 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 0
+    },
+    
+    "model": "MF",
+    "dataset": "OGBL-COLLAB",
+    
+    "out_dir": "out/COLLAB_edge_classification/MF/",
+    
+    "params": {
+        "seed": 41,
+        "epochs": 500,
+        "batch_size": 32768,
+        "init_lr": 0.01,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 10,
+        "min_lr": 1e-5,
+        "weight_decay": 0.0,
+        "print_epoch_interval": 1,
+        "max_time": 12
+    },
+    
+    "net_params": {
+        "L": 0,
+        "hidden_dim": 256,
+        "out_dim": 256,
+        "num_embs": 235868
+    }
+}

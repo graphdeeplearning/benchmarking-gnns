@@ -1,0 +1,38 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 3
+    },
+    
+    "model": "GatedGCN",
+    "dataset": "OGBL-COLLAB",
+    
+    "out_dir": "out/COLLAB_edge_classification/GatedGCN/isotropic/",
+    
+    "params": {
+        "seed": 41,
+        "epochs": 500,
+        "batch_size": 32768,
+        "init_lr": 0.001,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 10,
+        "min_lr": 1e-5,
+        "weight_decay": 0.0,
+        "print_epoch_interval": 1,
+        "max_time": 24
+    },
+    
+    "net_params": {
+        "L": 3,
+        "hidden_dim": 48,
+        "out_dim": 48,
+        "residual": true,
+        "edge_feat": false,
+        "readout": "mean",
+        "in_feat_dropout": 0.0,
+        "dropout": 0.0,
+        "batch_norm": true,
+        "layer_type": "isotropic",
+        "pos_enc": false
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 0
+    },
+    
+    "model": "GIN",
+    "dataset": "DD",
+    
+    "out_dir": "out/TUs_graph_classification/",
+
+    "params": {
+        "seed": 41,
+        "epochs": 1000,
+        "batch_size": 20,
+        "init_lr": 1e-3,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 25,
+        "min_lr": 1e-6,
+        "weight_decay": 0.0,
+        "print_epoch_interval": 5,
+        "max_time": 12
+    },
+    
+    "net_params": {
+        "L": 4,
+        "hidden_dim": 106,
+        "residual": true,
+        "readout": "sum",
+        "n_mlp_GIN": 2,
+        "learn_eps_GIN": true,
+        "neighbor_aggr_GIN": "sum",
+        "in_feat_dropout": 0.0,
+        "dropout": 0.0,
+        "batch_norm": true
+    }
+}

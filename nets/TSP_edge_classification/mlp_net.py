@@ -37,7 +37,7 @@ class MLPNet(nn.Module):
         
         self.readout_mlp = MLPReadout(2*hidden_dim, n_classes)
 
-    def forward(self, g, h, e, snorm_n, snorm_e):
+    def forward(self, g, h, e):
         h = self.in_feat_dropout(h)
         h = self.feat_mlp(h)
         if self.gated:

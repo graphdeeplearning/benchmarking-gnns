@@ -84,7 +84,7 @@ class NewDatasetDGL(torch.utils.data.Dataset):
 
 ### 2.3 Load your dataset
 
-At the next step, the user will define a class `NewDataset()` that loads the DGL dataset and define a `collate()` module to create mini-batches of graphs.  
+At the next step, the user will define a class `NewDataset()` that loads the DGL dataset and define a `collate()` module to create mini-batches of graphs.  Note that `collate()` function is for the MP-GCNs which use batches of sparse graphs, and `collate_dense_gnn()` is for the WL-GNNs which use dense graphs, with no batching of multiple graphs in one tensor.
 ```
 class NewDataset(torch.utils.data.Dataset):
     def __init__(self, name):
@@ -98,6 +98,18 @@ class NewDataset(torch.utils.data.Dataset):
     	graphs, labels = map(list, zip(*samples))
     	batched_graph = dgl.batch(graphs)
         return batched_graph, labels
+        
+    def collate_dense_gnn(self, samples):
+        """
+            we have the adjacency matrix in R^{n x n}, the node features in R^{d_n} and edge features R^{d_e}.
+            Then we build a zero-initialized tensor, say X, in R^{(1 + d_n + d_e) x n x n}. X[0, :, :] is the adjacency matrix.
+            The diagonal X[1:1+d_n, i, i], i = 0 to n-1, store the node feature of node i. 
+            The off diagonal X[1+d_n:, i, j] store edge features of edge(i, j).
+        """
+        # prepare one dense tensor using above instruction
+        # store as x_will_all_info
+        
+        return x_with_all_info, labels
 ```
 
 
@@ -114,7 +126,7 @@ def LoadData(DATASET_NAME):
 
 
 
-### 2.5 Create mini-batches 
+### 2.5 Create mini-batches for MP-GCNs
 
 Eventually, the user will call function `LoadData(DATASET_NAME)` to load the dataset and function `DataLoader()` to create mini-batch of graphs. For example, this code loads the ZINC dataset and prepares mini-batch of 128 train graphs:
 ```
@@ -127,13 +139,19 @@ dataset = LoadData(DATASET_NAME)
 train_loader = DataLoader(dataset.train, batch_size=128, shuffle=True, collate_fn=MoleculeDataset.collate)
 ```
 
+**Note** that the batching approach for MP-GCNs is not applicable for WL-GNNs which operate on dense tensors. Therefore, we simply have the following code for WL-GNNs.
+
+```
+train_loader = DataLoader(dataset.train, shuffle=True, collate_fn=MoleculeDataset.collate_dense_gnn)
+```
+
 
 
 <br>
 
 ## 3. Dataset split
 
-A data split for the TU dataset that preserves the class distribution across train-validation-test sets was prepared. The splits are stored in the [TUs/](../data/TUs) folder. We also store the split for the ZINC dataset in the [molecules/](../data/molecules) folder.
+A data split for the TU dataset that preserves the class distribution across train-validation-test sets was prepared. The splits are stored in the [TUs/](../data/TUs) folder. Similarly, the split indices for CSL are stored in the [CSL/](../data/CSL) folder. We also store the split for the ZINC dataset in the [molecules/](../data/molecules) folder. For COLLAB, the dataset splits are automatically fetched from the OGB library.
 
 
 

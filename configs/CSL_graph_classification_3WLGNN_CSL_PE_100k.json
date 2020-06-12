@@ -1,0 +1,35 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 0
+    },
+    
+    "model": "3WLGNN",
+    "dataset": "CSL",
+    
+    "out_dir": "out/CSL_graph_classification/",
+    
+    "params": {
+        "seed": 41,
+        "epochs": 1000,
+        "batch_size": 5,
+        "init_lr": 5e-4,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 5,
+        "min_lr": 1e-6,
+        "weight_decay": 0.0,
+        "print_epoch_interval": 5,
+        "max_time": 12
+    },
+    
+    "net_params": {
+        "L": 3,
+        "hidden_dim": 78,
+        "depth_of_mlp": 2,
+        "residual": false,
+        "dropout": 0.0,
+        "layer_norm": false,
+        "pos_enc": true,
+        "pos_enc_dim": 20
+    }
+}

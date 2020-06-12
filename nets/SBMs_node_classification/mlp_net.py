@@ -42,7 +42,7 @@ class MLPNet(nn.Module):
         self.readout_mlp = MLPReadout(hidden_dim, n_classes)
 
 
-    def forward(self, g, h, e, snorm_n, snorm_e):
+    def forward(self, g, h, e):
 
         # input embedding
         h = self.embedding_h(h)

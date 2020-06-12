@@ -1,0 +1,34 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 1
+    },
+    
+    "model": "3WLGNN",
+    "dataset": "TSP",
+    
+    "out_dir": "out/TSP_edge_classification/3WLGNN/",
+    
+    "params": {
+        "seed": 41,
+        "epochs": 500,
+        "batch_size": 4,
+        "init_lr": 0.001,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 10,
+        "min_lr": 1e-5,
+        "weight_decay": 0.0,
+        "print_epoch_interval": 1,
+        "max_time": 12
+    },
+    
+    "net_params": {
+        "L": 3,
+        "hidden_dim": 52,
+        "depth_of_mlp": 2,
+        "residual": false,
+        "dropout": 0.0,
+        "layer_norm": false,
+        "edge_feat": true
+    }
+}
