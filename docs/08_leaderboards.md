@@ -1,10 +1,10 @@
 # Leaderboards
 
-The leaderboard includes the best performing GNN models on each datasets, _in order_, with their scores and the number of trainable parameters. The **small** parameter models have 100k trainable parameters and the **large** parameter models have 500k trainable parameters. For each dataset, the GNN model with the best performance score is is highlighted as **bold**.
+The leaderboard includes the best performing GNN models on each datasets, _in order_, with their scores and the number of trainable parameters. The **small** parameter models have 100k trainable parameters and the **large** parameter models have 500k trainable parameters.
 
 ## 1. PATTERN - Node Classification
 
-### 1.a Models with small configs, _i.e._ 100k trainable parameters
+**Models with small configs, _i.e._ 100k trainable parameters**   
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
@@ -17,11 +17,11 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 |7| GCN  | 100923 | 63.880 &plusmn; 0.074 | [Link](https://arxiv.org/abs/1609.02907) |
 |8| GraphSage | 101739 | 50.516 &plusmn; 0.001 | [Link](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf) |
 
-### 1.b Models with large configs, _i.e._ 500k trainable parameters   
+**Models with large configs, _i.e._ 500k trainable parameters**   
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-|1|**GatedGCN-PE** | **505421** | **86.363 &plusmn; 0.127**| [Link](https://arxiv.org/abs/2003.00982) |
+|1|GatedGCN-PE | 505421 | 86.363 &plusmn; 0.127| [Link](https://arxiv.org/abs/2003.00982) |
 |2|RingGNN | 504766 | 86.244 &plusmn; 0.025 |[Link](https://papers.nips.cc/paper/9718-on-the-equivalence-between-graph-isomorphism-testing-and-function-approximation-with-gnns) |
 |3|MoNet | 511487 | 85.582 &plusmn; 0.038 | [Link](https://arxiv.org/abs/1611.08402) |
 |4|GatedGCN | 502223 | 85.568 &plusmn; 0.088 | [Link](https://arxiv.org/abs/1711.07553) |
@@ -39,13 +39,14 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | |
+
+
 **Models with large configs, _i.e._ 500k trainable parameters**   
 
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | 
+
 
 
 <br>
@@ -56,13 +57,15 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test MAE  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | |
+
+
 **Models with large configs, _i.e._ 500k trainable parameters**   
 
 
 |Rank|Model | #Params | Test MAE  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | 
+
+
 
 <br>
 
@@ -72,13 +75,15 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | |
+
+
 **Models with large configs, _i.e._ 500k trainable parameters**   
 
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | 
+
+
 
 <br>
 
@@ -88,13 +93,15 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | |
+
+
 **Models with large configs, _i.e._ 500k trainable parameters**   
 
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | 
+
+
 
 <br>
 
@@ -104,13 +111,15 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test F1  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | |
+
+
 **Models with large configs, _i.e._ 500k trainable parameters**   
 
 
 |Rank|Model | #Params | Test F1  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | 
+
+
 
 <br>
 
@@ -120,13 +129,15 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test Hits@50  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | |
+
+
 **Models with large configs, _i.e._ 500k trainable parameters**   
 
 
 |Rank|Model | #Params | Test Hits@50  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
-| | | | | | 
+
+
 
 
 
