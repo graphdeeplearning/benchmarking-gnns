@@ -70,7 +70,26 @@
 
 ## 8. Leaderboard
 
+The leaderboard includes the best-5 performing GNN models on each datasets, with their scores and the number of trainable parameters.
 
+### 8.1 PATTERN - Node Classification
+
+|Model|#Params (small)|Test Acc  &plusmn; s.d.|#Params (large)|Test Acc  &plusmn; s.d.| 
+| -------- |:------------:|:---------------:|:-----------:|:------------------------:|
+| GatedGCN  | 104003 | 84.480 &plusmn; 0.122 | 502223 | 85.568 &plusmn; 0.088 |
+| GCN  | 100923 | 63.880 &plusmn; 0.074 | 500823 | 71.892 &plusmn; 0.334 |
+
+### 8.2 CLUSTER - Node Classification
+
+### 8.3 ZINC - Graph Regression
+
+### 8.4 MNIST - Graph Classification
+
+### 8.5 CIFAR10 - Graph Classification
+
+### 8.6 TSP - Edge Classification/Link Prediction
+
+### 8.7 OGBL-COLLAB - Edge Classification/Link Prediction
 
 
 <br><br><br>
