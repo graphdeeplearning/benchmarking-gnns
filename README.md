@@ -70,12 +70,12 @@
 
 ## 8. Leaderboard
 
-The leaderboard includes the best-5 performing GNN models on each datasets, _in order_, with their scores and the number of trainable parameters.
+The leaderboard includes the best performing GNN models on each datasets, _in order_, with their scores and the number of trainable parameters. The **small** parameter models have 100k trainable parameters and the **large** parameter models have 500k trainable parameters.
 
 ### 8.1 PATTERN - Node Classification
 
 
-|| Small |  | | Large  |  |
+<!-- || Small |  | | Large  |  |
 | -------- |------------:| :--------: |------------| --------: |:------------:|
 |**Model** | **#Params** | **Test Acc  &plusmn; s.d.** | **Model** | **#Params** | **Test Acc  &plusmn; s.d.** |
 | GatedGCN  | 104003 | 84.480 &plusmn; 0.122 | GatedGCN | 502223 | 85.568 &plusmn; 0.088 |
@@ -86,7 +86,7 @@ The leaderboard includes the best-5 performing GNN models on each datasets, _in 
 | GIN | 100884 | 85.590 &plusmn; 0.011 | GIN | 508574 | 85.387  &plusmn; 0.136 |
 | RingGNN | 105206 | 86.245 &plusmn; 0.013 | RingGNN | 504766 | 86.244 &plusmn; 0.025 |
 | 3WLGNN | 103572 | 85.661 &plusmn; 0.353 | 3WLGNN | 502872 | 85.341 &plusmn; 0.207 |
-| | | |GatedGCN-PE | 505421 | 86.363 &plusmn; 0.127
+| | | |GatedGCN-PE | 505421 | 86.363 &plusmn; 0.127 -->
 
 
 || Small |  | | Large  |  |
@@ -102,12 +102,6 @@ The leaderboard includes the best-5 performing GNN models on each datasets, _in 
 | GraphSage | 101739 | 50.516 &plusmn; 0.001 |GCN | 500823 | 71.892 &plusmn; 0.334 |
 ||||GraphSage | 502842 | 50.492 &plusmn; 0.001 |
 
-
-
-<!-- |Model|#Params (small)|Test Acc  &plusmn; s.d.|#Params (large)|Test Acc  &plusmn; s.d.| 
-| -------- |:------------:|:---------------:|:-----------:|:------------------------:|
-| GatedGCN  | 104003 | 84.480 &plusmn; 0.122 | 502223 | 85.568 &plusmn; 0.088 |
-| GCN  | 100923 | 63.880 &plusmn; 0.074 | 500823 | 71.892 &plusmn; 0.334 | -->
 
 ### 8.2 CLUSTER - Node Classification
 
