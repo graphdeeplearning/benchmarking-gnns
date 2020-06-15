@@ -1,7 +1,7 @@
 ## Updates
 
 **Jun 11, 2020**: 
-- We released a new version of the [paper](https://arxiv.org/abs/2003.00982v2) which incorporates experimental pipeline for WL-GNNs operating on dense rank-2 tensors. For the code corresponding to an [earlier version](https://arxiv.org/abs/2003.00982v1) of this project, please check [this branch](https://github.com/graphdeeplearning/benchmarking-gnns/tree/arXivV1).  
+- We released a new version of the [paper](https://arxiv.org/abs/2003.00982v2) and updated the codebase to incorporate experimental pipeline for WL-GNNs operating on dense rank-2 tensors. For the code corresponding to an [earlier version](https://arxiv.org/abs/2003.00982v1) of this project, please check [this branch](https://github.com/graphdeeplearning/benchmarking-gnns/tree/arXivV1).  
 - We also include a [LEADERBOARD](#8-leaderboard) for all datasets, which will be updated regularly.
 
 ---
@@ -104,6 +104,9 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 
 ### 8.2 CLUSTER - Node Classification
+|| Small |  | | Large  |  |
+| -------- |------------:| :--------: |------------| --------: |:------------:|
+|**Model** | **#Params** | **Test Acc  &plusmn; s.d.** | **Model** | **#Params** | **Test Acc  &plusmn; s.d.** |
 
 ### 8.3 ZINC - Graph Regression
 
