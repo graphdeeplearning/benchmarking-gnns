@@ -1,3 +1,11 @@
+## Updates
+
+**Jun 11, 2020**: 
+- We released a new version of the [paper](https://arxiv.org/abs/2003.00982v2) which incorporates experimental pipeline for WL-GNNs operating on dense rank-2 tensors. For the code corresponding to an [earlier version](https://arxiv.org/abs/2003.00982v1) of this project, please check [this branch](https://github.com/graphdeeplearning/benchmarking-gnns/tree/arXivV1).  
+- We also include a [LEADERBOARD](#8-leaderboard) for all datasets, which will be updated regularly.
+
+---
+
 # Benchmarking Graph Neural Networks
 
 <img src="./docs/gnns.jpg" align="right" width="350"/>
@@ -58,7 +66,9 @@
 }
 ```
 
+---
 
+## 8. Leaderboard
 
 
 
