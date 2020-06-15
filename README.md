@@ -70,9 +70,14 @@
 
 ## 8. Leaderboard
 
-The leaderboard includes the best-5 performing GNN models on each datasets, with their scores and the number of trainable parameters.
+The leaderboard includes the best-5 performing GNN models on each datasets, _in order_, with their scores and the number of trainable parameters.
 
 ### 8.1 PATTERN - Node Classification
+
+| Small #Params <br> Model &emsp;&emsp; #Params &emsp;&emsp; Test Acc  &plusmn; s.d. | Large #Params <br> Model &emsp;&emsp; #Params &emsp;&emsp; Test Acc  &plusmn; s.d.
+| -------- |:------------:|
+| GatedGCN  &emsp;&emsp; 104003 &emsp;&emsp; 84.480 &plusmn; 0.122 | GatedGCN &emsp;&emsp; 502223 &emsp;&emsp; 85.568 &plusmn; 0.088 |
+| GCN  &emsp;&emsp; 100923 &emsp;&emsp; 63.880 &plusmn; 0.074 | GCN &emsp;&emsp; 500823 &emsp;&emsp; 71.892 &plusmn; 0.334 |
 
 |Model|#Params (small)|Test Acc  &plusmn; s.d.|#Params (large)|Test Acc  &plusmn; s.d.| 
 | -------- |:------------:|:---------------:|:-----------:|:------------------------:|
