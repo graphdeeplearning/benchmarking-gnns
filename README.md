@@ -76,7 +76,7 @@ The leaderboard includes the best-5 performing GNN models on each datasets, _in 
 
 | | Small #Params | | | Large #Params | |
 |Model | #Params | Test Acc  &plusmn; s.d. | Model | #Params | Test Acc  &plusmn; s.d. |
-| -------- |:------------:|
+| -------- |:------------:| -------- |:------------:| -------- |:------------:|
 | GatedGCN  | 104003 | 84.480 &plusmn; 0.122 | GatedGCN | 502223 | 85.568 &plusmn; 0.088 |
 | GCN  | 100923 | 63.880 &plusmn; 0.074 | GCN | 500823 | 71.892 &plusmn; 0.334 |
 
