@@ -102,21 +102,53 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 | GraphSage | 101739 | 50.516 &plusmn; 0.001 |GCN | 500823 | 71.892 &plusmn; 0.334 |
 ||||GraphSage | 502842 | 50.492 &plusmn; 0.001 |
 
+<br>
 
 ### 8.2 CLUSTER - Node Classification
+
 || Small |  | | Large  |  |
 | -------- |------------:| :--------: |------------| --------: |:------------:|
 |**Model** | **#Params** | **Test Acc  &plusmn; s.d.** | **Model** | **#Params** | **Test Acc  &plusmn; s.d.** |
 
+<br>
+
 ### 8.3 ZINC - Graph Regression
+
+|| Small |  | | Large  |  |
+| -------- |------------:| :--------: |------------| --------: |:------------:|
+|**Model** | **#Params** | **Test MAE  &plusmn; s.d.** | **Model** | **#Params** | **Test MAE  &plusmn; s.d.** |
+
+<br>
 
 ### 8.4 MNIST - Graph Classification
 
+|| Small |  | | Large  |  |
+| -------- |------------:| :--------: |------------| --------: |:------------:|
+|**Model** | **#Params** | **Test Acc  &plusmn; s.d.** | **Model** | **#Params** | **Test Acc  &plusmn; s.d.** |
+
+<br>
+
 ### 8.5 CIFAR10 - Graph Classification
+
+|| Small |  | | Large  |  |
+| -------- |------------:| :--------: |------------| --------: |:------------:|
+|**Model** | **#Params** | **Test Acc  &plusmn; s.d.** | **Model** | **#Params** | **Test Acc  &plusmn; s.d.** |
+
+<br>
 
 ### 8.6 TSP - Edge Classification/Link Prediction
 
+|| Small |  | | Large  |  |
+| -------- |------------:| :--------: |------------| --------: |:------------:|
+|**Model** | **#Params** | **Test F1  &plusmn; s.d.** | **Model** | **#Params** | **Test F1  &plusmn; s.d.** |
+
+<br>
+
 ### 8.7 OGBL-COLLAB - Edge Classification/Link Prediction
+
+|| Small |  | | Large  |  |
+| -------- |------------:| :--------: |------------| --------: |:------------:|
+|**Model** | **#Params** | **Test Hits@50  &plusmn; s.d.** | **Model** | **#Params** | **Test Hits@50  &plusmn; s.d.** |
 
 
 <br><br><br>
