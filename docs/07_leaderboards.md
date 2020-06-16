@@ -1,23 +1,12 @@
 # Leaderboards
 
-The leaderboard includes the best performing GNN models on each datasets, _in order_, with their scores and the number of trainable parameters. The **small** parameter models have 100k trainable parameters and the **large** parameter models have 500k trainable parameters.
+The leaderboard includes the best performing GNN models on each datasets, _in order_, with their scores and the number of trainable parameters. 
+<!-- The **small** parameter models have 100k trainable parameters and the **large** parameter models have 500k trainable parameters. -->
 
 ## 1. PATTERN - Node Classification
 
-**Models with small configs, _i.e._ 100k trainable parameters**   
 
-|Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
-|----| ---------- |------------:| :--------:|:-------:|
-|1| RingGNN | 105206 | 86.245 &plusmn; 0.013 | [Link](https://papers.nips.cc/paper/9718-on-the-equivalence-between-graph-isomorphism-testing-and-function-approximation-with-gnns) |
-|2| 3WLGNN | 103572 | 85.661 &plusmn; 0.353 | [Link](https://arxiv.org/abs/1905.11136) |
-|3| GIN | 100884 | 85.590 &plusmn; 0.011 | [Link](https://arxiv.org/abs/1810.00826)|
-|4| MoNet | 103775 | 85.482 &plusmn; 0.037 | [Link](https://arxiv.org/abs/1611.08402) |
-|5| GatedGCN  | 104003 | 84.480 &plusmn; 0.122 | [Link](https://arxiv.org/abs/1711.07553) |
-|6| GAT | 109936 | 75.824 &plusmn; 1.823 | [Link](https://arxiv.org/abs/1710.10903) |
-|7| GCN  | 100923 | 63.880 &plusmn; 0.074 | [Link](https://arxiv.org/abs/1609.02907) |
-|8| GraphSage | 101739 | 50.516 &plusmn; 0.001 | [Link](https://cs.stanford.edu/people/jure/pubs/graphsage-nips17.pdf) |
-
-**Models with large configs, _i.e._ 500k trainable parameters**   
+**Models with configs having 500k trainable parameters**   
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
@@ -35,21 +24,8 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 ## 2. CLUSTER - Node Classification
 
-**Models with small configs, _i.e._ 100k trainable parameters**   
 
-|Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
-|----| ---------- |------------:| :--------:|:-------:|
-|1|GatedGCN|104355|60.404 &plusmn; 0.419|[Link](https://bit.ly/gatedgcn-paper) |
-|2|GIN|103544|58.384 &plusmn; 0.236|[Link](https://bit.ly/gin-paper) |
-|3|MoNet|104227|58.064 &plusmn; 0.131| [Link](https://bit.ly/monet-paper) |
-|4|GAT|110700|57.732 &plusmn; 0.323|[Link](https://bit.ly/gat-paper) |
-|5|3WLGNN|105552|57.130 &plusmn; 6.539|[Link](https://bit.ly/3wlgnn-paper) |
-|6|GCN| 101655| 53.445 &plusmn; 2.029 | [Link](https://bit.ly/gcn-paper) |
-|7|GraphSage|102187|50.454 &plusmn; 0.145|[Link](https://bit.ly/graphsage-paper) |
-|8|RingGNN|104746|42.418 &plusmn; 20.063|[Link](https://bit.ly/ring-gnn-paper) |
-
-
-**Models with large configs, _i.e._ 500k trainable parameters**   
+**Models with configs having 500k trainable parameters**   
 
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
@@ -70,24 +46,8 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 ## 3. ZINC - Graph Regression
 
-**Models with small configs, _i.e._ 100k trainable parameters**   
 
-|Rank|Model | #Params | Test MAE  &plusmn; s.d. | Paper |
-|----| ---------- |------------:| :--------:|:-------:|
-|1|3WLGNN-E|103098| 0.256 &plusmn; 0.054|[Link](https://bit.ly/3wlgnn-paper) |
-|2|RingGNN-E|104403 |0.363 &plusmn; 0.026|[Link](https://bit.ly/ring-gnn-paper) |
-|3|GatedGCN-E|105875|0.375 &plusmn; 0.003|[Link](https://bit.ly/gatedgcn-pe-paper) |
-|4|GIN|103079| 0.387 &plusmn; 0.015|[Link](https://bit.ly/gin-paper) |
-|5|MoNet|106002|0.397 &plusmn; 0.010|[Link](https://bit.ly/monet-paper) |
-|6|3WLGNN|102150 |0.407 &plusmn; 0.028|[Link](https://bit.ly/3wlgnn-paper) |
-|7|GatedGCN|105735|0.435 &plusmn; 0.011|[Link](https://bit.ly/gatedgcn-paper) |
-|8|GCN|103077| 0.459 &plusmn; 0.006|[Link](https://bit.ly/gcn-paper) |
-|9|GraphSage|94977|0.468 &plusmn; 0.003|[Link](https://bit.ly/graphsage-paper) |
-|10|GAT|102385|0.475 &plusmn; 0.007|[Link](https://bit.ly/gat-paper) |
-|11|RingGNN|97978 |0.512 &plusmn; 0.023|[Link](https://bit.ly/ring-gnn-paper) |
-
-
-**Models with large configs, _i.e._ 500k trainable parameters**   
+**Models with configs having 500k trainable parameters**   
 
 
 |Rank|Model | #Params | Test MAE  &plusmn; s.d. | Paper |
@@ -108,7 +68,7 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 ## 4. MNIST - Graph Classification
 
-**Models with small configs, _i.e._ 100k trainable parameters**   
+**Models with configs having 100k trainable parameters**   
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
@@ -122,7 +82,7 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 |8|RingGNN|105398| 11.350 &plusmn; 0.000|[Link](https://bit.ly/ring-gnn-paper) |
 
 
-**Models with large configs, _i.e._ 500k trainable parameters for 3WLGNN and RingGNN**   
+**Models with configs having 500k trainable parameters for 3WLGNN and RingGNN**   
 
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
@@ -136,7 +96,7 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 ## 5. CIFAR10 - Graph Classification
 
-**Models with small configs, _i.e._ 100k trainable parameters**   
+**Models with configs having 100k trainable parameters**   
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
@@ -150,7 +110,7 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 |8|RingGNN|105165|19.300 &plusmn; 16.108|[Link](https://bit.ly/ring-gnn-paper) |
 
 
-**Models with large configs, _i.e._ 500k trainable parameters for 3WLGNN and RingGNN**   
+**Models with configs having 500k trainable parameters for 3WLGNN and RingGNN**   
 
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
@@ -164,7 +124,7 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 ## 6. TSP - Edge Classification/Link Prediction
 
-**Models with small configs, _i.e._ 100k trainable parameters**   
+**Models with configs having 100k trainable parameters**   
 
 |Rank|Model | #Params | Test F1  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
@@ -180,7 +140,7 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 |10|GCN|95702 |0.630 &plusmn; 0.001|[Link](https://bit.ly/gcn-paper) |
 
 
-**Models with large configs, _i.e._ 500k trainable parameters**   
+**Models with configs having 500k trainable parameters**   
 
 
 |Rank|Model | #Params | Test F1  &plusmn; s.d. | Paper |
