@@ -39,6 +39,14 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
+|1|GatedGCN|104355|60.404 &plusmn; 0.419|[Link](https://bit.ly/gatedgcn-paper) |
+|2|GIN|103544|58.384 &plusmn; 0.236|[Link](https://bit.ly/gin-paper) |
+|3|MoNet|104227|58.064 &plusmn; 0.131| [Link](https://bit.ly/monet-paper) |
+|4|GAT|110700|57.732 &plusmn; 0.323|[Link](https://bit.ly/gat-paper) |
+|5|3WLGNN|105552|57.130 &plusmn; 6.539|[Link](https://bit.ly/3wlgnn-paper) |
+|6|GCN| 101655| 53.445 &plusmn; 2.029 | [Link](https://bit.ly/gcn-paper) |
+|7|GraphSage|102187|50.454 &plusmn; 0.145|[Link](https://stanford.io/graphsage-paper) |
+|8|RingGNN|104746|42.418 &plusmn; 20.063|[Link](https://bit.ly/ring-gnn-paper) |
 
 
 **Models with large configs, _i.e._ 500k trainable parameters**   
@@ -46,6 +54,15 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Paper |
 |----| ---------- |------------:| :--------:|:-------:|
+|1|GatedGCN-PE|503473|74.088 &plusmn; 0.344|[Link](https://bit.ly/gatedgcn-pe-paper) |
+|2|GatedGCN|502615|73.840 &plusmn; 0.326|[Link](https://bit.ly/gatedgcn-paper) |
+|3|GAT|527874|70.587 &plusmn; 0.447|[Link](https://bit.ly/gat-paper) |
+|4|GCN|501687|68.498 &plusmn; 0.976|[Link](https://bit.ly/gcn-paper) |
+|5|MoNet|511999|66.407 &plusmn; 0.540|[Link](https://bit.ly/monet-paper) |
+|6|GIN|517570|64.716 &plusmn; 1.553|[Link](https://bit.ly/gin-paper) |
+|7|GraphSage|503350|63.844 &plusmn; 0.110|[Link](https://stanford.io/graphsage-paper) |
+|8|3WLGNN|507252|55.489 &plusmn; 7.863|[Link](https://bit.ly/3wlgnn-paper) |
+|9|RingGNN|524202|22.340 &plusmn; 0.000|[Link](https://bit.ly/ring-gnn-paper) |
 
 
 
