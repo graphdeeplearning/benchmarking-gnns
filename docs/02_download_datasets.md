@@ -41,7 +41,7 @@ Script [script_download_molecules.sh](../data/script_download_molecules.sh) is l
 <br>
 
 ## 4. PATTERN/CLUSTER SBM datasets
-PATTERN size is 1.60GB and CLUSTER size is 1.26GB.
+PATTERN size is 1.98GB and CLUSTER size is 1.26GB.
 
 ```
 # At the root of the project
@@ -77,8 +77,9 @@ Script [script_download_CSL.sh](../data/script_download_CSL.sh) is located here.
 <br>
 
 ## 7. COLLAB dataset
+COLLAB size is 360MB.
 
-Nothing to do. The COLLAB dataset files will be automatically downloaded from OGB when running the experiment files for COLLAB.
+No script to run. The COLLAB dataset files will be automatically downloaded from OGB when running the experiment files for COLLAB.
 
 
 <br>
