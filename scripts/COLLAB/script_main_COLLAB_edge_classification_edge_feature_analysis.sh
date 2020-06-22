@@ -23,7 +23,7 @@
 
 
 ############
-# COLLAB - 4 RUNS  
+# OGBL-COLLAB - 4 RUNS  
 ############
 
 seed0=411
@@ -33,7 +33,7 @@ seed3=231
 code=main_COLLAB_edge_classification.py 
 tmux new -s benchmark_COLLAB_edge_classification -d
 tmux send-keys "source activate benchmark_gnn" C-m
-dataset=COLLAB
+dataset=OGBL-COLLAB
 tmux send-keys "
 python $code --dataset $dataset --gpu_id 0 --seed $seed0 --config 'configs/COLLAB_edge_classification_GAT_isotropic.json' &
 python $code --dataset $dataset --gpu_id 1 --seed $seed1 --config 'configs/COLLAB_edge_classification_GAT_isotropic.json' &
