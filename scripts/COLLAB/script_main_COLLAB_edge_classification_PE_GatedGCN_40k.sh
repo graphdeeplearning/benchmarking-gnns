@@ -28,7 +28,7 @@
 
 
 ############
-# COLLAB - 4 RUNS  
+# OGBL-COLLAB - 4 RUNS  
 ############
 
 seed0=41
@@ -36,7 +36,7 @@ seed1=42
 seed2=9
 seed3=23
 code=main_COLLAB_edge_classification.py 
-dataset=COLLAB
+dataset=OGBL-COLLAB
 tmux new -s benchmark_COLLAB_edge_classification -d
 tmux send-keys "source activate benchmark_gnn" C-m
 tmux send-keys "

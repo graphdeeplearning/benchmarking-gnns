@@ -70,7 +70,7 @@
 
 ## 7. Leaderboards
 
-[Leaderboards](./docs/07_leaderboards.md) of GNN models on each dataset. 
+[Leaderboards](./docs/07_leaderboards.md) of GNN models on each dataset. [Instructions](./docs/07_contribute_leaderboards.md) to contribute to leaderboards.
 
 
 <br>
