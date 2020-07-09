@@ -26,6 +26,9 @@ def train_epoch_sparse(model, optimizer, device, data_loader, epoch):
         optimizer.zero_grad()
         try:
             batch_pos_enc = batch_graphs.ndata['pos_enc'].to(device)
+            sign_flip = torch.rand(batch_pos_enc.size(1)).to(device)
+            sign_flip[sign_flip>=0.5] = 1.0; sign_flip[sign_flip<0.5] = -1.0
+            batch_pos_enc = batch_pos_enc * sign_flip.unsqueeze(0)
             batch_scores = model.forward(batch_graphs, batch_x, batch_e, batch_pos_enc)
         except:
             batch_scores = model.forward(batch_graphs, batch_x, batch_e)

@@ -34,6 +34,6 @@
         "batch_norm": true,
         "layer_type": "edgereprfeat",
         "pos_enc": true,
-        "pos_enc_dim": 40
+        "pos_enc_dim": 20
     }
 }

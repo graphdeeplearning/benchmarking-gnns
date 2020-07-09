@@ -33,6 +33,6 @@
         "dropout": 0.0,
         "batch_norm": true,
         "pos_enc": true,
-        "pos_enc_dim": 40
+        "pos_enc_dim": 20
     }
 }
