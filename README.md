@@ -13,7 +13,7 @@
 	+ Updated PATTERN dataset.
 	+ Fixed bug for PATTERN and CLUSTER accuracy.
 	+ Moved first release to this [branch](https://github.com/graphdeeplearning/benchmarking-gnns/tree/arXivV1).
-* New ArXiv's version of the [paper](https://arxiv.org/pdf/2003.00982v2.pdf).
+* New ArXiv's version of the [paper](https://arxiv.org/pdf/2003.00982.pdf).
 
 
 **Mar 3, 2020**
@@ -77,7 +77,7 @@
 
 ## 8. Reference 
 
-[ArXiv's paper](https://arxiv.org/pdf/2003.00982v2.pdf)
+[ArXiv's paper](https://arxiv.org/pdf/2003.00982.pdf)
 ```
 @article{dwivedi2020benchmarkgnns,
   title={Benchmarking Graph Neural Networks},
