@@ -52,15 +52,18 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test MAE  &plusmn; s.d. | Links |
 |----| ---------- |------------:| :--------:|:-------:|
-|1|GatedGCN-PE|505011 |0.214 &plusmn; 0.006|[Paper](https://bit.ly/gatedgcn-pe-paper) |
-|2|GatedGCN-E|504309| 0.282 &plusmn; 0.015|[Paper](https://bit.ly/gatedgcn-pe-paper) |
-|3|MoNet|504013 |0.292 &plusmn; 0.006|[Paper](https://bit.ly/monet-paper) |
-|4|3WLGNN-E|507603|0.303 &plusmn; 0.068|[Paper](https://bit.ly/3wlgnn-paper) |
-|5|RingGNN-E|527283| 0.353 &plusmn; 0.019|[Paper](https://bit.ly/ring-gnn-paper) |
-|6|GCN|505079| 0.367 &plusmn; 0.011|[Paper](https://bit.ly/gcn-paper) |
-|7|GAT|531345|0.384 &plusmn; 0.007|[Paper](https://bit.ly/gat-paper) |
-|8|GraphSage|505341 |0.398 &plusmn; 0.002|[Paper](https://bit.ly/graphsage-paper) |
-|9|GIN|509549| 0.526 &plusmn; 0.051|[Paper](https://bit.ly/gin-paper) |
+|1|PNA|387155 |0.142 &plusmn; 0.010|[Paper](https://bit.ly/pna-paper), [Code](https://bit.ly/pna-code) |
+|2|MPNN (sum)|480805 |0.145 &plusmn; 0.007|[Paper](https://bit.ly/pna-paper), [Code](https://bit.ly/pna-code) |
+|3|GatedGCN-PE|505011 |0.214 &plusmn; 0.006|[Paper](https://bit.ly/gatedgcn-pe-paper) |
+|4|MPNN (max)|480805 |0.252 &plusmn; 0.009|[Paper](https://bit.ly/pna-paper), [Code](https://bit.ly/pna-code) |
+|5|GatedGCN-E|504309| 0.282 &plusmn; 0.015|[Paper](https://bit.ly/gatedgcn-pe-paper) |
+|6|MoNet|504013 |0.292 &plusmn; 0.006|[Paper](https://bit.ly/monet-paper) |
+|7|3WLGNN-E|507603|0.303 &plusmn; 0.068|[Paper](https://bit.ly/3wlgnn-paper) |
+|8|RingGNN-E|527283| 0.353 &plusmn; 0.019|[Paper](https://bit.ly/ring-gnn-paper) |
+|9|GCN|505079| 0.367 &plusmn; 0.011|[Paper](https://bit.ly/gcn-paper) |
+|10|GAT|531345|0.384 &plusmn; 0.007|[Paper](https://bit.ly/gat-paper) |
+|11|GraphSage|505341 |0.398 &plusmn; 0.002|[Paper](https://bit.ly/graphsage-paper) |
+|12|GIN|509549| 0.526 &plusmn; 0.051|[Paper](https://bit.ly/gin-paper) |
 
 
 
@@ -72,14 +75,17 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Links |
 |----| ---------- |------------:| :--------:|:-------:|
-|1|GatedGCN|104217 |97.340 &plusmn; 0.143|[Paper](https://bit.ly/gatedgcn-paper) |
-|2|GraphSage|104337 |97.312 &plusmn; 0.097|[Paper](https://bit.ly/graphsage-paper) |
-|3|GIN|105434 |96.485 &plusmn; 0.252|[Paper](https://bit.ly/gin-paper) |
-|4|GAT|110400| 95.535 &plusmn; 0.205|[Paper](https://bit.ly/gat-paper) |
-|5|3WLGNN|108024 |95.075 &plusmn; 0.961|[Paper](https://bit.ly/3wlgnn-paper) |
-|6|MoNet|104049 |90.805 &plusmn; 0.032|[Paper](https://bit.ly/monet-paper) |
-|7|GCN|101365 |90.705 &plusmn; 0.218|[Paper](https://bit.ly/gcn-paper) |
-|8|RingGNN|105398| 11.350 &plusmn; 0.000|[Paper](https://bit.ly/ring-gnn-paper) |
+|1|PNA|119812 |97.940 &plusmn; 0.120|[Paper](https://bit.ly/pna-paper), [Code](https://bit.ly/pna-code) |
+|2|MPNN (max)|109057 |97.690 &plusmn; 0.220|[Paper](https://bit.ly/pna-paper), [Code](https://bit.ly/pna-code) |
+|3|GatedGCN|104217 |97.340 &plusmn; 0.143|[Paper](https://bit.ly/gatedgcn-paper) |
+|4|GraphSage|104337 |97.312 &plusmn; 0.097|[Paper](https://bit.ly/graphsage-paper) |
+|5|MPNN (sum)|109057 |96.900 &plusmn; 0.150|[Paper](https://bit.ly/pna-paper), [Code](https://bit.ly/pna-code) |
+|6|GIN|105434 |96.485 &plusmn; 0.252|[Paper](https://bit.ly/gin-paper) |
+|7|GAT|110400| 95.535 &plusmn; 0.205|[Paper](https://bit.ly/gat-paper) |
+|8|3WLGNN|108024 |95.075 &plusmn; 0.961|[Paper](https://bit.ly/3wlgnn-paper) |
+|9|MoNet|104049 |90.805 &plusmn; 0.032|[Paper](https://bit.ly/monet-paper) |
+|10|GCN|101365 |90.705 &plusmn; 0.218|[Paper](https://bit.ly/gcn-paper) |
+|11|RingGNN|105398| 11.350 &plusmn; 0.000|[Paper](https://bit.ly/ring-gnn-paper) |
 
 
 **Models with configs having 500k trainable parameters for 3WLGNN and RingGNN**   
@@ -100,14 +106,17 @@ The leaderboard includes the best performing GNN models on each datasets, _in or
 
 |Rank|Model | #Params | Test Acc  &plusmn; s.d. | Links |
 |----| ---------- |------------:| :--------:|:-------:|
-|1|GatedGCN|104357|67.312 &plusmn; 0.311|[Paper](https://bit.ly/gatedgcn-paper) |
-|2|GraphSage|104517|65.767 &plusmn; 0.308|[Paper](https://bit.ly/graphsage-paper) |
-|3|GAT|110704|64.223 &plusmn; 0.455|[Paper](https://bit.ly/gat-paper) |
-|4|3WLGNN|108516|59.175 &plusmn; 1.593|[Paper](https://bit.ly/3wlgnn-paper) |
-|5|GCN|101657|55.710 &plusmn; 0.381|[Paper](https://bit.ly/gcn-paper) |
-|6|GIN|105654|55.255 &plusmn; 1.527|[Paper](https://bit.ly/gin-paper) |
-|7|MoNet|104229|54.655 &plusmn; 0.518|[Paper](https://bit.ly/monet-paper) |
-|8|RingGNN|105165|19.300 &plusmn; 16.108|[Paper](https://bit.ly/ring-gnn-paper) |
+|1|MPNN (max)|109277 |70.860 &plusmn; 0.270 |[Paper](https://bit.ly/pna-paper), [Code](https://bit.ly/pna-code) |
+|2|PNA|113472 |70.350 &plusmn; 0.630 |[Paper](https://bit.ly/pna-paper), [Code](https://bit.ly/pna-code) |
+|3|GatedGCN|104357|67.312 &plusmn; 0.311|[Paper](https://bit.ly/gatedgcn-paper) |
+|4|GraphSage|104517|65.767 &plusmn; 0.308|[Paper](https://bit.ly/graphsage-paper) |
+|5|MPNN (sum)|109277 |65.610 &plusmn; 0.300 |[Paper](https://bit.ly/pna-paper), [Code](https://bit.ly/pna-code) |
+|6|GAT|110704|64.223 &plusmn; 0.455|[Paper](https://bit.ly/gat-paper) |
+|7|3WLGNN|108516|59.175 &plusmn; 1.593|[Paper](https://bit.ly/3wlgnn-paper) |
+|8|GCN|101657|55.710 &plusmn; 0.381|[Paper](https://bit.ly/gcn-paper) |
+|9|GIN|105654|55.255 &plusmn; 1.527|[Paper](https://bit.ly/gin-paper) |
+|10|MoNet|104229|54.655 &plusmn; 0.518|[Paper](https://bit.ly/monet-paper) |
+|11|RingGNN|105165|19.300 &plusmn; 16.108|[Paper](https://bit.ly/ring-gnn-paper) |
 
 
 **Models with configs having 500k trainable parameters for 3WLGNN and RingGNN**   
