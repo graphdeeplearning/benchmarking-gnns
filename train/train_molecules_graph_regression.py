@@ -18,6 +18,7 @@ def train_epoch_sparse(model, optimizer, device, data_loader, epoch):
     nb_data = 0
     gpu_mem = 0
     for iter, (batch_graphs, batch_targets) in enumerate(data_loader):
+        batch_graphs = batch_graphs.to(device)
         batch_x = batch_graphs.ndata['feat'].to(device)  # num x feat
         batch_e = batch_graphs.edata['feat'].to(device)
         batch_targets = batch_targets.to(device)
@@ -48,6 +49,7 @@ def evaluate_network_sparse(model, device, data_loader, epoch):
     nb_data = 0
     with torch.no_grad():
         for iter, (batch_graphs, batch_targets) in enumerate(data_loader):
+            batch_graphs = batch_graphs.to(device)
             batch_x = batch_graphs.ndata['feat'].to(device)
             batch_e = batch_graphs.edata['feat'].to(device)
             batch_targets = batch_targets.to(device)
