@@ -6,6 +6,11 @@
 
 ## Updates
 
+**Oct 7, 2020**
+* Repo updated to DGL 0.5.2 and PyTorch 1.6.0. Please update your environment using yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).
+* Added [ZINC-full](./data/script_download_molecules.sh) dataset (249K molecular graphs) with [scripts](./scripts/ZINC-full/).
+
+
 **Jun 11, 2020**
 * Second release of the project. Major updates : 
 	+ Added experimental pipeline for Weisfeiler-Lehman-GNNs operating on dense rank-2 tensors.
