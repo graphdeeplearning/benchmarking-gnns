@@ -1,5 +1,6 @@
 # Download datasets
 
+The following sections except the last one only work for versions before DGL 0.5.  If you have DGL 0.5 or later, please refer to the last section.
 
 <br>
 
@@ -94,9 +95,16 @@ bash script_download_all_datasets.sh
 
 Script [script_download_all_datasets.sh](../data/script_download_all_datasets.sh) is located here. 
 
+## 9. All datasets with DGL 0.5 or later
 
+```
+# At the root of the project
+cd data/
+bash script_download_all_datasets_dgl0.5.sh
+```
 
+Script [script_download_all_datasets_dgl0.5.sh](../data/script_download_all_datasets_dgl0.5.sh) is located here. 
 
-
+If you previously had DGL 0.4.3post2 or earlier versions, you will need to remove the downloaded pickle files and run the script above to redownload the datasets to migrate to DGL 0.5.
 
 <br><br><br>

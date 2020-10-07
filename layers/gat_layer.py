@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+import dgl
 from dgl.nn.pytorch import GATConv
 
 """
@@ -41,7 +42,10 @@ class GATLayer(nn.Module):
         if in_dim != (out_dim*num_heads):
             self.residual = False
 
-        self.gatconv = GATConv(in_dim, out_dim, num_heads, dropout, dropout)
+        if dgl.__version__ < "0.5":
+            self.gatconv = GATConv(in_dim, out_dim, num_heads, dropout, dropout)
+        else:
+            self.gatconv = GATConv(in_dim, out_dim, num_heads, dropout, dropout, allow_zero_in_degree=True)
 
         if self.batch_norm:
             self.batchnorm_h = nn.BatchNorm1d(out_dim * num_heads)
