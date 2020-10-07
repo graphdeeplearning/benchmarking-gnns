@@ -1,6 +1,6 @@
 # Download datasets
 
-The following sections except the last one only work for versions before DGL 0.5.  If you have DGL 0.5 or later, please refer to the last section.
+All the datasets work with DGL 0.5 or later. Please update the environment using the yml files in the [root](../) directory if the use of these datasets throw error(s).
 
 <br>
 
@@ -29,14 +29,15 @@ Script [script_download_superpixels.sh](../data/script_download_superpixels.sh) 
 <br>
 
 ## 3. ZINC molecular dataset
-ZINC size is 58.9MB.
+ZINC size is 58.9MB.  
 
+ZINC-full size is 1.17GB.
 ```
 # At the root of the project
 cd data/ 
 bash script_download_molecules.sh
 ```
-Script [script_download_molecules.sh](../data/script_download_molecules.sh) is located here. Code to reproduce the ZINC dataset is [here](../data/molecules/prepare_molecules.ipynb).
+Script [script_download_molecules.sh](../data/script_download_molecules.sh) is located here. Code to reproduce the ZINC dataset is [here](../data/molecules/prepare_molecules.ipynb) and the ZINC-full dataset is [here](../data/molecules/prepare_molecules_ZINC_full.ipynb).
 
 
 <br>
@@ -95,16 +96,5 @@ bash script_download_all_datasets.sh
 
 Script [script_download_all_datasets.sh](../data/script_download_all_datasets.sh) is located here. 
 
-## 9. All datasets with DGL 0.5 or later
-
-```
-# At the root of the project
-cd data/
-bash script_download_all_datasets_dgl0.5.sh
-```
-
-Script [script_download_all_datasets_dgl0.5.sh](../data/script_download_all_datasets_dgl0.5.sh) is located here. 
-
-If you previously had DGL 0.4.3post2 or earlier versions, you will need to remove the downloaded pickle files and run the script above to redownload the datasets to migrate to DGL 0.5.
 
 <br><br><br>
