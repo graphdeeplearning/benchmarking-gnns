@@ -138,8 +138,7 @@ class CSL(torch.utils.data.Dataset):
         t0 = time.time()
         print("[I] Preparing Circular Skip Link Graphs v4 ...")
         for sample in self.adj_list:
-            _g = dgl.DGLGraph()
-            _g.from_scipy_sparse_matrix(sample)
+            _g = dgl.from_scipy(sample)
             g = dgl.transform.remove_self_loop(_g)
             g.ndata['feat'] = torch.zeros(g.number_of_nodes()).long()
             #g.ndata['feat'] = torch.arange(0, g.number_of_nodes()).long() # v1

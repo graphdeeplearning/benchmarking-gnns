@@ -13,7 +13,7 @@ if test -f "$FILE"; then
 	echo -e "$FILE already downloaded."
 else
 	echo -e "\ndownloading $FILE..."
-	curl https://www.dropbox.com/s/bhimk9p1xst6dvo/ZINC.pkl?dl=1 -o ZINC.pkl -J -L -k
+	curl https://data.dgl.ai/dataset/benchmarking-gnns/ZINC.pkl -o ZINC.pkl -J -L -k
 fi
 
 
@@ -24,7 +24,5 @@ else
 	echo -e "\ndownloading $FILE..."
 	curl https://www.dropbox.com/s/gpzovwqqsudarvq/ZINC-full.pkl?dl=1 -o ZINC-full.pkl -J -L -k
 fi
-
-
 
 

@@ -13,7 +13,7 @@ if test -f "$FILE"; then
 	echo -e "$FILE already downloaded."
 else
 	echo -e "\ndownloading $FILE..."
-	curl https://www.dropbox.com/s/wcfmo4yvnylceaz/MNIST.pkl?dl=1 -o MNIST.pkl -J -L -k
+	curl https://data.dgl.ai/dataset/benchmarking-gnns/MNIST.pkl -o MNIST.pkl -J -L -k
 fi
 
 
@@ -22,7 +22,7 @@ if test -f "$FILE"; then
 	echo -e "$FILE already downloaded."
 else
 	echo -e "\ndownloading $FILE..."
-	curl https://www.dropbox.com/s/agocm8pxg5u8yb5/CIFAR10.pkl?dl=1 -o CIFAR10.pkl -J -L -k
+	curl https://data.dgl.ai/dataset/benchmarking-gnns/CIFAR10.pkl -o CIFAR10.pkl -J -L -k
 fi
 
 

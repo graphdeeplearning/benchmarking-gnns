@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+import dgl
 import dgl.function as fn
 from dgl.nn.pytorch import GraphConv
 
@@ -49,8 +50,10 @@ class GCNLayer(nn.Module):
         self.dropout = nn.Dropout(dropout)
         if self.dgl_builtin == False:
             self.apply_mod = NodeApplyModule(in_dim, out_dim)
-        else:
+        elif dgl.__version__ < "0.5":
             self.conv = GraphConv(in_dim, out_dim)
+        else:
+            self.conv = GraphConv(in_dim, out_dim, allow_zero_in_degree=True)
 
         
     def forward(self, g, feature):
