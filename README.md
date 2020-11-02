@@ -6,6 +6,12 @@
 
 ## Updates
 
+**Nov 2, 2020**
+ * This branch of the project is compatible with DGL 0.4.2.
+ * Added [ZINC-full](./data/script_download_molecules.sh) dataset (249K molecular graphs) with [scripts](./scripts/ZINC-full/).
+
+
+
 **Jun 11, 2020**
 * Second release of the project. Major updates : 
 	+ Added experimental pipeline for Weisfeiler-Lehman-GNNs operating on dense rank-2 tensors.
