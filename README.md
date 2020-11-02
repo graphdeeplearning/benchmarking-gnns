@@ -7,8 +7,9 @@
 ## Updates
 
 **Nov 2, 2020**
-* This branch of the project is compatible with DGL 0.5.2 and relevant dependencies defined in the environment yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).
-* For the version of the project compatible with DGL 0.4.2 and relevant dependencies, please use this [branch](https://github.com/graphdeeplearning/benchmarking-gnns/tree/master-dgl-0.4.2).
+* Project based on DGL 0.5.2. See the relevant dependencies defined in the environment yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).
+	+ Numerical experiments report faster training times with DGL 0.4.2 compared to DGL 0.5.2.
+	+ For the version of the project compatible with DGL 0.4.2 and relevant dependencies, please use this [branch](https://github.com/graphdeeplearning/benchmarking-gnns/tree/master-dgl-0.4.2).
 
 **Oct 7, 2020**
 * Repo updated to DGL 0.5.2 and PyTorch 1.6.0. Please update your environment using yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).
