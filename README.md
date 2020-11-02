@@ -7,9 +7,10 @@
 ## Updates
 
 **Nov 2, 2020**
- * This branch of the project is compatible with DGL 0.4.2.
+* This branch of the project is compatible with DGL 0.4.2 and relevant dependencies defined in the environment yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).
+* As of today, our experiments report the training time per epoch faster on DGL 0.4.2 against DGL 0.5.2.
+* For the version of the project compatible with DGL 0.5.2 and relevant dependencies, please use this [branch](https://github.com/graphdeeplearning/benchmarking-gnns/tree/master-dgl-0.5.2).
  * Added [ZINC-full](./data/script_download_molecules.sh) dataset (249K molecular graphs) with [scripts](./scripts/ZINC-full/).
-
 
 
 **Jun 11, 2020**
