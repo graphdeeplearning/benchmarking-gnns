@@ -64,11 +64,10 @@ tensorboard --logdir='./' --port 6006
 
 
 #### 2.3 To see the training logs in Tensorboard on remote machine
-1. Go to the logs directory, i.e. `out/molecules_graph_regression/logs/`.
-2. Run the [script](../scripts/TensorBoard/script_tensorboard.sh) with `bash script_tensorboard.sh`.
-3. On your local machine, run the command `ssh -N -f -L localhost:6006:localhost:6006 user@xx.xx.xx.xx`.
-4. Open `http://localhost:6006` in your browser. Note that `user@xx.xx.xx.xx` corresponds to your user login and the IP of the remote machine.
-
+1. Move this [script](../scripts/TensorBoard/script_tensorboard.sh) to the root of the repository, i.e. benchmarking-gnns/.
+2. Run the script `bash script_tensorboard.sh`.
+3. On your local machine, run the command `ssh -N -f -L localhost:6006:localhost:6006 user@xx.xx.xx.xx`.
+4. Open `http://localhost:6006` in your browser. Note that `user@xx.xx.xx.xx` corresponds to your user login and the IP of the remote machine.
 
 
 <br>
