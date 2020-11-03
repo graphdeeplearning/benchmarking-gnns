@@ -46,22 +46,22 @@ conda activate benchmark_gnn
 
 ## 3. Setup Python environment for GPU
 
-DGL requires CUDA **10.0**.
+DGL 0.5.2 requires CUDA **10.2**.
 
 For Ubuntu **18.04**
 
 ```
-# Setup CUDA 10.0 on Ubuntu 18.04
+# Setup CUDA 10.2 on Ubuntu 18.04
 sudo apt-get --purge remove "*cublas*" "cuda*"
 sudo apt --purge remove "nvidia*"
 sudo apt autoremove
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.0.130-1_amd64.deb 
-sudo dpkg -i cuda-repo-ubuntu1804_10.0.130-1_amd64.deb
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.2.89-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu1804_10.2.89-1_amd64.deb
 sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
 sudo apt update
-sudo apt install -y cuda-10-0
+sudo apt install -y cuda-10-2
 sudo reboot
-cat /usr/local/cuda/version.txt # Check CUDA version is 10.0
+cat /usr/local/cuda/version.txt # Check CUDA version is 10.2
 
 # Clone GitHub repo
 conda install git
@@ -77,32 +77,6 @@ conda activate benchmark_gnn
 
 
 
-For Ubuntu **16.04**
-
-```
-# Setup CUDA 10.0 on Ubuntu 16.04
-sudo apt-get --purge remove "*cublas*" "cuda*"
-sudo apt --purge remove "nvidia*"
-sudo apt autoremove
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
-sudo dpkg -i cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
-sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
-sudo apt update
-sudo apt install -y cuda-10-0
-sudo reboot
-cat /usr/local/cuda/version.txt # Check CUDA version is 10.0
-
-# Clone GitHub repo
-conda install git
-git clone https://github.com/graphdeeplearning/benchmarking-gnns.git
-cd benchmarking-gnns
-
-# Install python environment
-conda env create -f environment_gpu.yml 
-
-# Activate environment
-conda activate benchmark_gnn
-```
 
 
 
