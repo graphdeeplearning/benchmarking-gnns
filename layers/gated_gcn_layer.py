@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import dgl.function as fn
 
 """
     ResGatedGCN: Residual Gated Graph ConvNets
@@ -58,7 +59,14 @@ class GatedGCNLayer(nn.Module):
         g.ndata['Eh'] = self.E(h) 
         g.edata['e']  = e 
         g.edata['Ce'] = self.C(e) 
-        g.update_all(self.message_func,self.reduce_func) 
+
+        g.apply_edges(fn.u_add_v('Dh', 'Eh', 'DEh'))
+        g.edata['e'] = g.edata['DEh'] + g.edata['Ce']
+        g.edata['sigma'] = torch.sigmoid(g.edata['e'])
+        g.update_all(fn.u_mul_e('Bh', 'sigma', 'm'), fn.sum('m', 'sum_sigma_h'))
+        g.update_all(fn.copy_e('sigma', 'm'), fn.sum('m', 'sum_sigma'))
+        g.ndata['h'] = g.ndata['Ah'] + g.ndata['sum_sigma_h'] / (g.ndata['sum_sigma'] + 1e-6)
+        #g.update_all(self.message_func,self.reduce_func) 
         h = g.ndata['h'] # result of graph convolution
         e = g.edata['e'] # result of graph convolution
         
@@ -135,7 +143,12 @@ class GatedGCNLayerEdgeFeatOnly(nn.Module):
         g.ndata['Bh'] = self.B(h) 
         g.ndata['Dh'] = self.D(h)
         g.ndata['Eh'] = self.E(h) 
-        g.update_all(self.message_func,self.reduce_func) 
+        #g.update_all(self.message_func,self.reduce_func) 
+        g.apply_edges(fn.u_add_v('Dh', 'Eh', 'e'))
+        g.edata['sigma'] = torch.sigmoid(g.edata['e'])
+        g.update_all(fn.u_mul_e('Bh', 'sigma', 'm'), fn.sum('m', 'sum_sigma_h'))
+        g.update_all(fn.copy_e('sigma', 'm'), fn.sum('m', 'sum_sigma'))
+        g.ndata['h'] = g.ndata['Ah'] + g.ndata['sum_sigma_h'] / (g.ndata['sum_sigma'] + 1e-6)
         h = g.ndata['h'] # result of graph convolution
         
         if self.batch_norm:
@@ -195,7 +208,9 @@ class GatedGCNLayerIsotropic(nn.Module):
         g.ndata['h']  = h 
         g.ndata['Ah'] = self.A(h) 
         g.ndata['Bh'] = self.B(h)
-        g.update_all(self.message_func,self.reduce_func) 
+        #g.update_all(self.message_func,self.reduce_func) 
+        g.update_all(fn.copy_u('Bh', 'm'), fn.sum('m', 'sum_h'))
+        g.ndata['h'] = g.ndata['Ah'] + g.ndata['sum_h']
         h = g.ndata['h'] # result of graph convolution
         
         if self.batch_norm:
