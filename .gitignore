@@ -18,6 +18,8 @@ PATH/
 data/molecules/*.pkl
 data/molecules/*.pickle
 data/molecules/*.zip
+data/molecules/zinc_full/*.pkl
+data/molecules/zinc_full/*.pickle
 
 #TSP
 data/TSP/*.txt

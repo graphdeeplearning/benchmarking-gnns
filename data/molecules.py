@@ -20,7 +20,7 @@ import numpy as np
 
 
 class MoleculeDGL(torch.utils.data.Dataset):
-    def __init__(self, data_dir, split, num_graphs):
+    def __init__(self, data_dir, split, num_graphs=None):
         self.data_dir = data_dir
         self.split = split
         self.num_graphs = num_graphs
@@ -28,12 +28,13 @@ class MoleculeDGL(torch.utils.data.Dataset):
         with open(data_dir + "/%s.pickle" % self.split,"rb") as f:
             self.data = pickle.load(f)
 
-        # loading the sampled indices from file ./zinc_molecules/<split>.index
-        with open(data_dir + "/%s.index" % self.split,"r") as f:
-            data_idx = [list(map(int, idx)) for idx in csv.reader(f)]
-            self.data = [ self.data[i] for i in data_idx[0] ]
-            
-        assert len(self.data)==num_graphs, "Sample num_graphs again; available idx: train/val/test => 10k/1k/1k"
+        if self.num_graphs in [10000, 1000]:
+             # loading the sampled indices from file ./zinc_molecules/<split>.index
+            with open(data_dir + "/%s.index" % self.split,"r") as f:
+                data_idx = [list(map(int, idx)) for idx in csv.reader(f)]
+                self.data = [ self.data[i] for i in data_idx[0] ]
+
+            assert len(self.data)==num_graphs, "Sample num_graphs again; available idx: train/val/test => 10k/1k/1k"
         
         """
         data is a list of Molecule dict objects with following attributes
@@ -103,10 +104,15 @@ class MoleculeDatasetDGL(torch.utils.data.Dataset):
         self.num_bond_type = 4 # known meta-info about the zinc dataset; can be calculated as well
         
         data_dir='./data/molecules'
-        
-        self.train = MoleculeDGL(data_dir, 'train', num_graphs=10000)
-        self.val = MoleculeDGL(data_dir, 'val', num_graphs=1000)
-        self.test = MoleculeDGL(data_dir, 'test', num_graphs=1000)
+        if self.name == 'ZINC-full':
+            data_dir='./data/molecules/zinc_full'
+            self.train = MoleculeDGL(data_dir, 'train', num_graphs=220011)
+            self.val = MoleculeDGL(data_dir, 'val', num_graphs=24445)
+            self.test = MoleculeDGL(data_dir, 'test', num_graphs=5000)
+        else:            
+            self.train = MoleculeDGL(data_dir, 'train', num_graphs=10000)
+            self.val = MoleculeDGL(data_dir, 'val', num_graphs=1000)
+            self.test = MoleculeDGL(data_dir, 'test', num_graphs=1000)
         print("Time taken: {:.4f}s".format(time.time()-t0))
         
 

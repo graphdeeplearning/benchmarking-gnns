@@ -30,12 +30,13 @@ Script [script_download_superpixels.sh](../data/script_download_superpixels.sh) 
 ## 3. ZINC molecular dataset
 ZINC size is 58.9MB.
 
+ZINC-full size is 1.14GB.
 ```
 # At the root of the project
 cd data/ 
 bash script_download_molecules.sh
 ```
-Script [script_download_molecules.sh](../data/script_download_molecules.sh) is located here. Code to reproduce the ZINC dataset is [here](../data/molecules/prepare_molecules.ipynb).
+Script [script_download_molecules.sh](../data/script_download_molecules.sh) is located here. Code to reproduce the ZINC dataset is [here](../data/molecules/prepare_molecules.ipynb) and the ZINC-full dataset is [here](../data/molecules/prepare_molecules_ZINC_full.ipynb).(../data/molecules/prepare_molecules.ipynb).
 
 
 <br>

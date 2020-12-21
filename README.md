@@ -6,6 +6,13 @@
 
 ## Updates
 
+**Nov 2, 2020**
+* Project based on DGL 0.4.2. See the relevant dependencies defined in the environment yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).
+	+ Numerical experiments report faster training times with DGL 0.4.2 compared to DGL 0.5.2.
+	+ For the version of the project compatible with DGL 0.5.2 and relevant dependencies, please use this [branch](https://github.com/graphdeeplearning/benchmarking-gnns/tree/master-dgl-0.5.2).
+ * Added [ZINC-full](./data/script_download_molecules.sh) dataset (249K molecular graphs) with [scripts](./scripts/ZINC-full/).
+
+
 **Jun 11, 2020**
 * Second release of the project. Major updates : 
 	+ Added experimental pipeline for Weisfeiler-Lehman-GNNs operating on dense rank-2 tensors.
