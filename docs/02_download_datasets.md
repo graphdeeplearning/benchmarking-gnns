@@ -83,10 +83,33 @@ COLLAB size is 360MB.
 
 No script to run. The COLLAB dataset files will be automatically downloaded from OGB when running the experiment files for COLLAB.
 
+<br>
+
+## 8. GraphTheoryProp dataset
+GraphTheoryProp size is 1.2GB.
+
+```
+# At the root of the project
+cd data/ 
+bash script_download_graphtheoryprop.sh
+```
+Script [script_download_graphtheoryprop.sh](../data/script_download_graphtheoryprop.sh) is located here. 
 
 <br>
 
-## 8. All datasets
+## 9. CYCLES dataset
+CYCLES size is 81MB.
+
+```
+# At the root of the project
+cd data/ 
+bash script_download_cycles.sh
+```
+Script [script_download_cycles.sh](../data/script_download_cycles.sh) is located here. 
+
+<br>
+
+## 10. All datasets
 
 ```
 # At the root of the project

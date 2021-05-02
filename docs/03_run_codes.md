@@ -104,6 +104,10 @@ bash scripts/COLLAB/script_main_COLLAB_edge_classification_PE_GatedGCN_40k.sh # 
 bash scripts/CSL/script_main_CSL_graph_classification_20_seeds.sh # run CSL dataset without node features on 20 seeds
 bash scripts/CSL/script_main_CSL_graph_classification_PE_20_seeds.sh # run CSL dataset with PE on 20 seeds
 
+bash scripts/GraphTheoryProp/script_main_GraphTheoryProp_multitask_100k.sh # run GraphTheoryProp dataset for 100k params
+
+bash scripts/CYCLES/script_main_CYCLES_graph_classification_all.sh # run CYCLES dataset for 100k params
+
 bash scripts/TU/script_main_TUs_graph_classification_100k_seed1.sh # run TU datasets for 100k params on seed1
 bash scripts/TU/script_main_TUs_graph_classification_100k_seed2.sh # run TU datasets for 100k params on seed2
 ```

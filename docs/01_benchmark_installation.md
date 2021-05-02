@@ -46,7 +46,7 @@ conda activate benchmark_gnn
 
 ## 3. Setup Python environment for GPU
 
-DGL 0.5.2 requires CUDA **10.2**.
+DGL 0.6.1 requires CUDA **10.2**.
 
 For Ubuntu **18.04**
 

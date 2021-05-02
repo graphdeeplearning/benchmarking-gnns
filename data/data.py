@@ -8,6 +8,8 @@ from data.SBMs import SBMsDataset
 from data.TSP import TSPDataset
 from data.COLLAB import COLLABDataset
 from data.CSL import CSLDataset
+from data.cycles import CyclesDataset
+from data.graphtheoryprop import GraphTheoryPropDataset
 
 
 def LoadData(DATASET_NAME):
@@ -45,4 +47,12 @@ def LoadData(DATASET_NAME):
     # handling for the CSL (Circular Skip Links) Dataset
     if DATASET_NAME == 'CSL': 
         return CSLDataset(DATASET_NAME)
+    
+    # handling for the CYCLES Dataset from https://github.com/cvignac/SMP
+    if DATASET_NAME == 'CYCLES': 
+        return CyclesDataset(DATASET_NAME)
+    
+    # handling for the GraphTheoryProp Dataset, which is the multitask dataset from https://github.com/lukecavabarrett/pna
+    if DATASET_NAME == 'GraphTheoryProp' or DATASET_NAME == 'GRAPHTHEORYPROP':
+        return GraphTheoryPropDataset('GraphTheoryProp')
     

@@ -151,7 +151,7 @@ train_loader = DataLoader(dataset.train, shuffle=True, collate_fn=MoleculeDatase
 
 ## 3. Dataset split
 
-A data split for the TU dataset that preserves the class distribution across train-validation-test sets was prepared. The splits are stored in the [TUs/](../data/TUs) folder. Similarly, the split indices for CSL are stored in the [CSL/](../data/CSL) folder. We also store the split for the ZINC dataset in the [molecules/](../data/molecules) folder. For COLLAB, the dataset splits are automatically fetched from the OGB library.
+A data split for the TU dataset that preserves the class distribution across train-validation-test sets was prepared. The splits are stored in the [TUs/](../data/TUs) folder. Similarly, the split indices for CSL are stored in the [CSL/](../data/CSL) folder. We also store the split for the ZINC dataset in the [molecules/](../data/molecules) folder. For COLLAB, the dataset splits are automatically fetched from the OGB library. For CYCLES and GraphTheoryProp, the splits are the same as in the corresponding original papers.
 
 
 
