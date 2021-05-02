@@ -15,7 +15,7 @@ dependencies:
 - pytorch=1.6.0
 - torchvision==0.7.0
 - pillow==6.1
-- dgl-cuda10.2=0.5.2
+- dgl-cuda10.2=0.6.1
 - numpy=1.16.4
 - matplotlib=3.1.0
 - tensorboard=1.14.0
