@@ -3,19 +3,13 @@ import argparse
 import glob
 import json
 import os
-import pickle
 import random
-import socket
 import time
 
-import dgl
 import numpy as np
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
 from tensorboardX import SummaryWriter
-from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from data.data import LoadData  # import dataset
