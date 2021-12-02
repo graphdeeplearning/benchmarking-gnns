@@ -21,25 +21,6 @@ from tqdm import tqdm
 from data.data import LoadData  # import dataset
 from nets.SBMs_node_classification.load_net import gnn_model  # import GNNs
 
-
-class DotDict(dict):
-    def __init__(self, **kwds):
-        self.update(kwds)
-        self.__dict__ = self
-
-
-
-
-
-
-"""
-    IMPORTING CUSTOM MODULES/METHODS
-"""
-
-
-
-
-
 """
     GPU Setup
 """
