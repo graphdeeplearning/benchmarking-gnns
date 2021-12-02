@@ -408,28 +408,5 @@ def main():
     net_params['total_param'] = view_model_param(MODEL_NAME, net_params)
     train_val_pipeline(MODEL_NAME, DATASET_NAME, params, net_params, dirs)
 
-    
-
-    
-    
-    
-    
-    
-    
-main()    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == "__main__":
+    main()
