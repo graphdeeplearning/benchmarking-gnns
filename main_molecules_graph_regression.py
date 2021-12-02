@@ -1,31 +1,27 @@
-
-
-
-
-
-"""
-    IMPORTING LIBS
-"""
-import dgl
-
-import numpy as np
+# ======================== Import Packages ======================== #
+import argparse
+import glob
+import json
 import os
+import pickle
+import random
 import socket
 import time
-import random
-import glob
-import argparse, json
-import pickle
 
+import dgl
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
 import torch.optim as optim
-from torch.utils.data import DataLoader
-
 from tensorboardX import SummaryWriter
+from torch.utils.data import DataLoader
 from tqdm import tqdm
+
+from data.data import LoadData  # import dataset
+from nets.molecules_graph_regression.load_net import \
+    gnn_model  # import all GNNS
+
 
 class DotDict(dict):
     def __init__(self, **kwds):
@@ -40,8 +36,6 @@ class DotDict(dict):
 """
     IMPORTING CUSTOM MODULES/METHODS
 """
-from nets.molecules_graph_regression.load_net import gnn_model # import all GNNS
-from data.data import LoadData # import dataset
 
 
 
@@ -146,8 +140,13 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
     
     if MODEL_NAME in ['RingGNN', '3WLGNN']:
         # import train functions specific for WLGNNs
-        from train.train_molecules_graph_regression import train_epoch_dense as train_epoch, evaluate_network_dense as evaluate_network
-        from functools import partial # util function to pass edge_feat to collate function
+        from functools import \
+            partial  # util function to pass edge_feat to collate function
+
+        from train.train_molecules_graph_regression import \
+            evaluate_network_dense as evaluate_network
+        from train.train_molecules_graph_regression import \
+            train_epoch_dense as train_epoch
 
         train_loader = DataLoader(trainset, shuffle=True, collate_fn=partial(dataset.collate_dense_gnn, edge_feat=net_params['edge_feat']))
         val_loader = DataLoader(valset, shuffle=False, collate_fn=partial(dataset.collate_dense_gnn, edge_feat=net_params['edge_feat']))
@@ -155,7 +154,10 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
         
     else:
         # import train functions for all other GNNs
-        from train.train_molecules_graph_regression import train_epoch_sparse as train_epoch, evaluate_network_sparse as evaluate_network
+        from train.train_molecules_graph_regression import \
+            evaluate_network_sparse as evaluate_network
+        from train.train_molecules_graph_regression import \
+            train_epoch_sparse as train_epoch
         
         train_loader = DataLoader(trainset, batch_size=params['batch_size'], shuffle=True, drop_last=drop_last, collate_fn=dataset.collate)
         val_loader = DataLoader(valset, batch_size=params['batch_size'], shuffle=False, drop_last=drop_last, collate_fn=dataset.collate)

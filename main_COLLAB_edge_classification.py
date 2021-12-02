@@ -1,31 +1,27 @@
-
-
-
-
-
-"""
-    IMPORTING LIBS
-"""
-import dgl
-
-import numpy as np
+# ======================== Import Packages ======================== #
+import argparse
+import glob
+import json
 import os
+import pickle
+import random
 import socket
 import time
-import random
-import glob
-import argparse, json
-import pickle
 
+import dgl
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
 import torch.optim as optim
-from torch.utils.data import DataLoader
-
 from tensorboardX import SummaryWriter
+from torch.utils.data import DataLoader
 from tqdm import tqdm
+
+from data.data import LoadData  # import dataset
+from nets.COLLAB_edge_classification.load_net import \
+    gnn_model  # import all GNNS
+
 
 class DotDict(dict):
     def __init__(self, **kwds):
@@ -41,11 +37,6 @@ class DotDict(dict):
 """
     IMPORTING CUSTOM MODULES/METHODS
 """
-from nets.COLLAB_edge_classification.load_net import gnn_model # import all GNNS
-from data.data import LoadData # import dataset
-
-
-
 
 """
     GPU Setup
@@ -144,7 +135,10 @@ def train_val_pipeline(MODEL_NAME, dataset, params, net_params, dirs):
         raise NotImplementedError # gave OOM while preparing dense tensor
     else:
         # import train functions for all other GCNs
-        from train.train_COLLAB_edge_classification import train_epoch_sparse as train_epoch, evaluate_network_sparse as evaluate_network
+        from train.train_COLLAB_edge_classification import \
+            evaluate_network_sparse as evaluate_network
+        from train.train_COLLAB_edge_classification import \
+            train_epoch_sparse as train_epoch
     
     # At any point you can hit Ctrl + C to break out of training early.
     try:
