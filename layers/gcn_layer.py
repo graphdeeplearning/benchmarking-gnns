@@ -31,7 +31,7 @@ class GCNLayer(nn.Module):
     """
         Param: [in_dim, out_dim]
     """
-    def __init__(self, in_dim, out_dim, activation, dropout, batch_norm, residual=False, dgl_builtin=False):
+    def __init__(self, in_dim, out_dim, activation, dropout, batch_norm, residual=False, dgl_builtin=True):
         super().__init__()
         self.in_channels = in_dim
         self.out_channels = out_dim

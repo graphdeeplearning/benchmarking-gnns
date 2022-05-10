@@ -66,3 +66,10 @@ def accuracy_VOC(scores, targets):
     targets = targets.cpu().detach().numpy()
     acc = f1_score(scores, targets, average='weighted')
     return acc
+
+
+def accuracy_WikiCS(scores, targets):
+    scores = scores.detach().argmax(dim=1)
+    acc = (scores==targets).float().sum().item()
+    acc = acc / len(targets)
+    return acc

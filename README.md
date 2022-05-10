@@ -6,10 +6,12 @@
 
 ## Updates
 
-**Nov 2, 2020**
-* Project based on DGL 0.5.2. See the relevant dependencies defined in the environment yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).
-	+ Numerical experiments report faster training times with DGL 0.4.2 compared to DGL 0.5.2.
-	+ For the version of the project compatible with DGL 0.4.2 and relevant dependencies, please use the [master branch](https://github.com/graphdeeplearning/benchmarking-gnns/tree/master).
+**May 10, 2022**
+* Project based on DGL 0.6.2 and higher. See the relevant dependencies defined in the environment yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).  
+* Updated technical report of the framework on [ArXiv](https://arxiv.org/pdf/2003.00982.pdf)
+* Added AQSOL dataset, which is similar to ZINC for graph regression task, but has a real-world measured chemical target. 
+* Added mathematical datasets -- GraphTheoryProp and CYCLES which are useful to test GNNs on specific theoretical graph properties.  
+* Fixed [issue #57](https://github.com/graphdeeplearning/benchmarking-gnns/issues/57).  
 
 **Oct 7, 2020**
 * Repo updated to DGL 0.5.2 and PyTorch 1.6.0. Please update your environment using yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).
@@ -80,7 +82,7 @@
 
 ## 7. Leaderboards
 
-[Leaderboards](./docs/07_leaderboards.md) of GNN models on each dataset. [Instructions](./docs/07_contribute_leaderboards.md) to contribute to leaderboards.
+Full leaderboards coming soon on [paperswithcode.com](https://paperswithcode.com/paper/benchmarking-graph-neural-networks).
 
 
 <br>
@@ -91,7 +93,7 @@
 ```
 @article{dwivedi2020benchmarkgnns,
   title={Benchmarking Graph Neural Networks},
-  author={Dwivedi, Vijay Prakash and Joshi, Chaitanya K and Laurent, Thomas and Bengio, Yoshua and Bresson, Xavier},
+  author={Dwivedi, Vijay Prakash and Joshi, Chaitanya K and Luu, Anh Tuan and Laurent, Thomas and Bengio, Yoshua and Bresson, Xavier},
   journal={arXiv preprint arXiv:2003.00982},
   year={2020}
 }

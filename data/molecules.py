@@ -11,6 +11,7 @@ import dgl
 
 from scipy import sparse as sp
 import numpy as np
+import torch.nn.functional as F
 
 # *NOTE
 # The dataset pickle and index files are in ./zinc_molecules/ dir
@@ -95,13 +96,74 @@ class MoleculeDGL(torch.utils.data.Dataset):
         return self.graph_lists[idx], self.graph_labels[idx]
     
     
+class MoleculeAqSolDGL(torch.utils.data.Dataset):
+    def __init__(self, data_dir, split, num_graphs=None):
+        self.data_dir = data_dir
+        self.split = split
+        self.num_graphs = num_graphs
+        
+        with open(data_dir + "/%s.pickle" % self.split,"rb") as f:
+            self.data = pickle.load(f)
+        
+        """
+        data is a list of tuple objects with following elements
+        graph_object = (node_feat, edge_feat, edge_index, solubility)  
+        """
+        self.graph_lists = []
+        self.graph_labels = []
+        self.n_samples = len(self.data)
+        assert num_graphs == self.n_samples
+        
+        self._prepare()
+    
+    def _prepare(self):
+        print("preparing %d graphs for the %s set..." % (self.num_graphs, self.split.upper()))
+        
+        count_filter1, count_filter2 = 0,0
+        
+        for molecule in self.data:
+            node_features = torch.LongTensor(molecule[0])
+            edge_features = torch.LongTensor(molecule[1])
+            
+            # Create the DGL Graph
+            g = dgl.graph((molecule[2][0], molecule[2][1]))
+                        
+            if g.num_nodes() == 0:
+                count_filter1 += 1
+                continue # skipping graphs with no bonds/edges
+            
+            if g.num_nodes() != len(node_features):
+                count_filter2 += 1
+                continue # cleaning <10 graphs with this discrepancy
+            
+            
+            g.edata['feat'] = edge_features    
+            g.ndata['feat'] = node_features
+           
+            self.graph_lists.append(g)
+            self.graph_labels.append(torch.Tensor([molecule[3]]))
+        print("Filtered graphs type 1/2: ", count_filter1, count_filter2)
+        print("Filtered graphs: ", self.n_samples - len(self.graph_lists))
+        
+    def __len__(self):
+        """Return the number of graphs in the dataset."""
+        return len(self.graph_lists)
+
+    def __getitem__(self, idx):
+        return self.graph_lists[idx], self.graph_labels[idx]
+    
+    
 class MoleculeDatasetDGL(torch.utils.data.Dataset):
     def __init__(self, name='Zinc'):
         t0 = time.time()
         self.name = name
         
-        self.num_atom_type = 28 # known meta-info about the zinc dataset; can be calculated as well
-        self.num_bond_type = 4 # known meta-info about the zinc dataset; can be calculated as well
+        if self.name == 'AqSol':
+            self.num_atom_type = 65 # known meta-info about the AqSol dataset; can be calculated as well 
+            self.num_bond_type = 5 # known meta-info about the AqSol dataset; can be calculated as well
+        else:            
+            self.num_atom_type = 28 # known meta-info about the zinc dataset; can be calculated as well
+            self.num_bond_type = 4 # known meta-info about the zinc dataset; can be calculated as well
         
         data_dir='./data/molecules'
         
@@ -110,10 +172,15 @@ class MoleculeDatasetDGL(torch.utils.data.Dataset):
             self.train = MoleculeDGL(data_dir, 'train', num_graphs=220011)
             self.val = MoleculeDGL(data_dir, 'val', num_graphs=24445)
             self.test = MoleculeDGL(data_dir, 'test', num_graphs=5000)
-        else:            
+        elif self.name == 'ZINC':            
             self.train = MoleculeDGL(data_dir, 'train', num_graphs=10000)
             self.val = MoleculeDGL(data_dir, 'val', num_graphs=1000)
             self.test = MoleculeDGL(data_dir, 'test', num_graphs=1000)
+        elif self.name == 'AqSol': 
+            data_dir='./data/molecules/asqol_graph_raw'
+            self.train = MoleculeAqSolDGL(data_dir, 'train', num_graphs=7985)
+            self.val = MoleculeAqSolDGL(data_dir, 'val', num_graphs=998)
+            self.test = MoleculeAqSolDGL(data_dir, 'test', num_graphs=999)
         print("Time taken: {:.4f}s".format(time.time()-t0))
         
 
@@ -166,6 +233,10 @@ def positional_encoding(g, pos_enc_dim):
     # EigVec = EigVec[:, EigVal.argsort()] # increasing order
     # g.ndata['pos_enc'] = torch.from_numpy(np.abs(EigVec[:,1:pos_enc_dim+1])).float() 
     
+    n = g.number_of_nodes()
+    if n <= pos_enc_dim:
+        g.ndata['pos_enc'] = F.pad(g.ndata['pos_enc'], (0, pos_enc_dim - n + 1), value=float('0'))
+    
     return g
 
 
@@ -174,7 +245,7 @@ class MoleculeDataset(torch.utils.data.Dataset):
 
     def __init__(self, name):
         """
-            Loading SBM datasets
+            Loading Moleccular datasets
         """
         start = time.time()
         print("[I] Loading dataset %s..." % (name))

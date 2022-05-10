@@ -15,7 +15,7 @@
         "batch_size": 25,
         "init_lr": 1e-4,
         "lr_reduce_factor": 0.5,
-        "lr_schedule_patience": 15,
+        "lr_schedule_patience": 10,
         "min_lr": 1e-6,
         "weight_decay": 0.0,
         "print_epoch_interval": 5,

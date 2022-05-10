@@ -27,7 +27,7 @@ seed3=35
 code=main_CYCLES_graph_classification.py 
 dataset=CYCLES
 tmux new -s benchmark_CYCLES -d
-tmux send-keys "source activate benchmark_gnn" C-m
+tmux send-keys "source activate gnn_lspe" C-m
 tmux send-keys "
 python $code --dataset $dataset --gpu_id 0 --seed $seed0 --num_train_data 200 --config 'configs/CYCLES_graph_classification_GIN_CYCLES_100k.json' &
 python $code --dataset $dataset --gpu_id 1 --seed $seed1 --num_train_data 200 --config 'configs/CYCLES_graph_classification_GIN_CYCLES_100k.json' &

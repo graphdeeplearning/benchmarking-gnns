@@ -10,6 +10,7 @@ from data.COLLAB import COLLABDataset
 from data.CSL import CSLDataset
 from data.cycles import CyclesDataset
 from data.graphtheoryprop import GraphTheoryPropDataset
+from data.WikiCS import WikiCSDataset
 
 
 def LoadData(DATASET_NAME):
@@ -23,7 +24,7 @@ def LoadData(DATASET_NAME):
         return SuperPixDataset(DATASET_NAME)
     
     # handling for (ZINC) molecule dataset
-    if DATASET_NAME == 'ZINC' or DATASET_NAME == 'ZINC-full':
+    if DATASET_NAME in ['ZINC', 'ZINC-full', 'AQSOL']:
         return MoleculeDataset(DATASET_NAME)
 
     # handling for the TU Datasets
@@ -55,4 +56,7 @@ def LoadData(DATASET_NAME):
     # handling for the GraphTheoryProp Dataset, which is the multitask dataset from https://github.com/lukecavabarrett/pna
     if DATASET_NAME == 'GraphTheoryProp' or DATASET_NAME == 'GRAPHTHEORYPROP':
         return GraphTheoryPropDataset('GraphTheoryProp')
+    
+    if DATASET_NAME == 'WikiCS':
+        return WikiCSDataset(DATASET_NAME)
     

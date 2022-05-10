@@ -1,0 +1,38 @@
+{
+    "gpu": {
+        "use": true,
+        "id": 0
+    },
+    
+    "model": "MoNet",
+    "dataset": "WikiCS",
+    
+    "out_dir": "out/WikiCS_node_classification_PE/",
+    
+    "params": {
+        "seed": 41,
+        "epochs": 1000,
+        "init_lr": 1e-2,
+        "lr_reduce_factor": 0.5,
+        "lr_schedule_patience": 25,
+        "min_lr": 1e-5,
+        "weight_decay": 5e-4,
+        "print_epoch_interval": 5,
+        "max_time": 24
+    },
+    
+    "net_params": {
+        "L": 4,
+        "hidden_dim": 80,
+        "out_dim": 80,
+        "residual": true,
+        "readout": "mean",
+        "kernel": 3,
+        "pseudo_dim_MoNet": 2,
+        "in_feat_dropout": 0.0,
+        "dropout": 0.35,
+        "batch_norm": true,
+        "pos_enc": true,
+        "pos_enc_dim": 20
+    }
+}

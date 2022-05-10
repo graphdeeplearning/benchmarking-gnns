@@ -87,6 +87,12 @@ bash scripts/ZINC/script_main_molecules_graph_regression_ZINC_100k.sh # run ZINC
 bash scripts/ZINC/script_main_molecules_graph_regression_ZINC_500k.sh # run ZINC dataset for 500k params
 bash scripts/ZINC/script_main_molecules_graph_regression_ZINC_PE_GatedGCN_500k.sh # run ZINC dataset with PE for GatedGCN
 
+bash scripts/AQSOL/script_main_molecules_graph_regression_AQSOL_100k.sh # run AQSOL dataset for 100k params
+bash scripts/AQSOL/script_main_molecules_graph_regression_AQSOL_500k.sh # run AQSOL dataset for 500k params
+bash scripts/AQSOL/script_main_molecules_graph_regression_AQSOL_PE_GatedGCN_500k.sh # run AQSOL dataset with PE for GatedGCN
+
+bash scripts/WikiCS/script_main_WikiCS_node_classification_100k.sh # run WikiCS dataset for 100k params
+
 bash scripts/SBMs/script_main_SBMs_node_classification_PATTERN_100k.sh # run PATTERN dataset for 100k params
 bash scripts/SBMs/script_main_SBMs_node_classification_PATTERN_500k.sh # run PATTERN dataset for 500k params
 bash scripts/SBMs/script_main_SBMs_node_classification_PATTERN_PE_GatedGCN_500k.sh # run PATTERN dataset with PE for GatedGCN
