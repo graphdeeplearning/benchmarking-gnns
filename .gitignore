@@ -20,6 +20,9 @@ data/molecules/*.pickle
 data/molecules/*.zip
 data/molecules/zinc_full/*.pkl
 data/molecules/zinc_full/*.pickle
+data/molecules/aqsol_graph_raw/
+data/molecules/aqsol_graph_raw/*.pickle
+data/molecules/*.csv
 
 #TSP
 data/TSP/*.txt
@@ -36,4 +39,16 @@ data/CSL/*.pkl
 data/CSL/*.zip
 data/CSL/*.pt
 
+#CYCLES
+data/cycles/*.pkl
 
+#GraphTheoryProp
+data/graphtheoryprop/*.pkl
+
+#WikiCS
+data/WikiCS/*.json
+
+
+
+scripts/StatisticalResults/cycles.ipynb
+scripts/StatisticalResults/wikics.ipynb
