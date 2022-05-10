@@ -9,7 +9,7 @@
 **May 10, 2022**
 * Project based on DGL 0.6.2 and higher. See the relevant dependencies defined in the environment yml files ([CPU](./environment_cpu.yml), [GPU](./environment_gpu.yml)).  
 * Updated technical report of the framework on [ArXiv](https://arxiv.org/pdf/2003.00982.pdf).
-* Added AQSOL dataset, which is similar to ZINC for graph regression task, but has a real-world measured chemical target. 
+* Added [AQSOL dataset](https://www.nature.com/articles/s41597-019-0151-1), which is similar to ZINC for graph regression task, but has a real-world measured chemical target. 
 * Added mathematical datasets -- GraphTheoryProp and CYCLES which are useful to test GNNs on specific theoretical graph properties.  
 * Fixed [issue #57](https://github.com/graphdeeplearning/benchmarking-gnns/issues/57).  
 
