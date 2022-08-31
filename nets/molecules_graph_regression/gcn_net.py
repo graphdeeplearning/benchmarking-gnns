@@ -53,7 +53,7 @@ class GCNNet(nn.Module):
         else:
             hg = dgl.mean_nodes(g, 'h')  # default readout is mean nodes
             
-        return self.MLP_layer(hg)
+        return self.MLP_layer(hg).squeeze()
     
     def loss(self, scores, targets):
         # loss = nn.MSELoss()(scores,targets)
