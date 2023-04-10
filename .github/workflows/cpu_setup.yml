@@ -1,0 +1,27 @@
+name: cpu_setup
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: benchmark_gnn
+          environment-file: environment_cpu.yml
+          python-version: 3.7
+      - run: |
+          conda info
+          conda list
+  
