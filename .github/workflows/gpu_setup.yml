@@ -15,7 +15,7 @@ jobs:
       run:
         shell: bash -el {0}
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: benchmark_gnn
@@ -24,3 +24,4 @@ jobs:
       - run: |
           conda info
           conda list
+  
